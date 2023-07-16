@@ -1,0 +1,12 @@
+{
+	"classPath": "src/",
+	"contributors": ["cedx"],
+	"dependencies": {"coconut.data": "", "hxnodejs": "", "tink_json": "", "tink_semver": "", "tink_url": ""},
+	"description": "Set up your GitHub Actions workflow with a standalone version of Apache Ivy.",
+	"license": "MIT",
+	"name": "setup_ivy",
+	"releasenote": "Initial release.",
+	"tags": ["action", "ci", "github", "ivy", "java", "test", "workflow"],
+	"url": "https://docs.belin.io/setup-ivy",
+	"version": "1.0.0"
+}

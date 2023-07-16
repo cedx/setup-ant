@@ -1,0 +1,17 @@
+name: Setup Ivy
+description: Set up your GitHub Actions workflow with a standalone version of Apache Ivy.
+author: Cédric Belin
+
+branding:
+  color: red
+  icon: download
+
+inputs:
+  version:
+    description: The version number of the Apache Ivy package.
+    default: 2.5.1
+    required: false
+
+runs:
+  using: node16
+  main: bin/setup_ivy.js

@@ -1,0 +1,30 @@
+{
+	"bugs": "https://github.com/cedx/setup-ivy/issues",
+	"description": "Set up your GitHub Actions workflow with a standalone version of Apache Ivy.",
+	"files": [],
+	"homepage": "https://docs.belin.io/setup-ivy",
+	"license": "MIT",
+	"name": "@cedx/setup-ivy",
+	"private": true,
+	"repository": "github:cedx/setup-ivy",
+	"type": "commonjs",
+	"version": "1.0.0",
+	"author": {
+		"email": "cedric@belin.io",
+		"name": "Cédric Belin",
+		"url": "https://belin.io"
+	},
+	"bin": {
+		"setup_ivy": "./bin/setup_ivy.js"
+	},
+	"dependencies": {
+		"@actions/core": "^1.10.0",
+		"@actions/tool-cache": "^2.0.1"
+	},
+	"devDependencies": {
+		"@vercel/ncc": "^0.36.1"
+	},
+	"engines": {
+		"node": ">=16.0.0"
+	}
+}

@@ -38,7 +38,7 @@ jobs:
     steps:
       - uses: actions/setup-java@v3
         with:
-          distribution: microsoft
+          distribution: temurin
           java-version: 17
       - uses: cedx/setup-ivy@main
       - run: ivy -version

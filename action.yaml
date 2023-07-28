@@ -1,5 +1,5 @@
 name: Setup Ant
-description: Set up your GitHub Actions workflow with a standalone version of Apache Ant.
+description: Set up your GitHub Actions workflow with a specific version of Apache Ant.
 author: Cédric Belin
 
 branding:

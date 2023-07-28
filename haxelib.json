@@ -2,7 +2,7 @@
 	"classPath": "src/",
 	"contributors": ["cedx"],
 	"dependencies": {"coconut.data": "", "hxnodejs": "", "tink_json": "", "tink_semver": "", "tink_url": ""},
-	"description": "Set up your GitHub Actions workflow with a standalone version of Apache Ant.",
+	"description": "Set up your GitHub Actions workflow with a specific version of Apache Ant.",
 	"license": "MIT",
 	"name": "setup_ant",
 	"releasenote": "Initial release.",

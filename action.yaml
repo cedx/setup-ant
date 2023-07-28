@@ -8,8 +8,8 @@ branding:
 
 inputs:
   version:
-    description: The version number of the Apache Ant package.
-    default: 1.10.13
+    description: The version constraint of the Apache Ant binary.
+    default: latest
     required: false
 
 runs:

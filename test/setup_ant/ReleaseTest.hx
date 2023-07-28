@@ -1,6 +1,5 @@
 package setup_ant;
 
-import setup_ant.Release.ReleaseAsset as Asset;
 using AssertionTools;
 
 /** Tests the features of the `Release` class. **/

@@ -47,6 +47,7 @@ class Setup {
 	function fetchOptionalTasks(antHome: String) {
 		final workingDirectory = Sys.getCwd();
 		Sys.setCwd(antHome);
+		Sys.putEnv("ANT_HOME", antHome);
 		Sys.command("ant -buildfile fetch.xml -noinput -silent -Ddest=system");
 		Sys.setCwd(workingDirectory);
 		return Promise.NOISE;

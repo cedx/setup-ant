@@ -15,10 +15,9 @@ using haxe.io.Path;
 	@:timeout(180_000)
 	public function download() {
 		new Setup(Release.latest).download().next(path -> {
-			//final ivyJar = FileSystem.readDirectory(path).filter(file -> file.startsWith("ivy-") && file.extension() == "jar");
-			//asserts.assert(ivyJar.length == 1);
+			final jars = FileSystem.readDirectory(Path.join([path, "lib"])).filter(file -> file.extension() == "jar");
 			asserts.assert(FileSystem.exists(Path.join([path, "bin", Sys.systemName() == "Windows" ? "ant.bat" : "ant"])));
-			//asserts.assert(FileSystem.exists(Path.join([path, "lib", ivyJar.pop()])));
+			asserts.assert(jars.filter(file -> file.startsWith("ivy-")).length == 1);
 		}).handle(asserts.handle);
 
 		return asserts;

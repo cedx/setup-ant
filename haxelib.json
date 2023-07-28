@@ -2,11 +2,11 @@
 	"classPath": "src/",
 	"contributors": ["cedx"],
 	"dependencies": {"coconut.data": "", "hxnodejs": "", "tink_json": "", "tink_semver": "", "tink_url": ""},
-	"description": "Set up your GitHub Actions workflow with a standalone version of Apache Ivy.",
+	"description": "Set up your GitHub Actions workflow with a standalone version of Apache Ant.",
 	"license": "MIT",
-	"name": "setup_ivy",
+	"name": "setup_ant",
 	"releasenote": "Initial release.",
-	"tags": ["action", "ci", "github", "ivy", "java", "test", "workflow"],
-	"url": "https://docs.belin.io/setup-ivy",
+	"tags": ["action", "ant", "ci", "github", "ivy", "java", "test", "workflow"],
+	"url": "https://docs.belin.io/setup-ant",
 	"version": "1.0.0"
 }

@@ -33,12 +33,15 @@ jobs:
         with:
           files: var/lcov.info
   action:
-    runs-on: ubuntu-latest
+    runs-on: ${{matrix.platform}}
     needs: test
+    strategy:
+      matrix:
+        platform: [macos-latest, ubuntu-latest, windows-latest]
     steps:
       - uses: actions/setup-java@v3
         with:
           distribution: temurin
           java-version: 17
-      - uses: cedx/setup-ivy@main
-      - run: ivy -version
+      - uses: cedx/setup-ant@main
+      - run: ant -version

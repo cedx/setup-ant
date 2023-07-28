@@ -1,5 +1,5 @@
-name: Setup Ivy
-description: Set up your GitHub Actions workflow with a standalone version of Apache Ivy.
+name: Setup Ant
+description: Set up your GitHub Actions workflow with a standalone version of Apache Ant.
 author: Cédric Belin
 
 branding:
@@ -8,10 +8,10 @@ branding:
 
 inputs:
   version:
-    description: The version number of the Apache Ivy package.
-    default: 2.5.1
+    description: The version number of the Apache Ant package.
+    default: 1.10.13
     required: false
 
 runs:
   using: node16
-  main: bin/setup_ivy.js
+  main: bin/setup_ant.js

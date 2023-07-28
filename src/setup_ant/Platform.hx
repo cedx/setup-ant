@@ -1,4 +1,4 @@
-package setup_ivy;
+package setup_ant;
 
 #if macro
 import haxe.Json;

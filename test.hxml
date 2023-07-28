@@ -4,7 +4,7 @@
 --library instrument
 --library tink_unittest
 --macro allowPackage("sys")
---macro instrument.Instrumentation.coverage(["setup_ivy"], ["src"])
+--macro instrument.Instrumentation.coverage(["setup_ant"], ["src"])
 --main RunTests
 share/build.hxml
 --cmd node var/tests.js

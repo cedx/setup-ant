@@ -4,7 +4,7 @@ import sys.io.File;
 function main() {
 	Sys.command("haxe build.hxml");
 
-	final file = "bin/setup_ivy.js";
+	final file = "bin/setup_ant.js";
 	Sys.command('npx ncc build $file --minify --out=var --target=es2022');
 	File.copy("var/index.js", file);
 }

@@ -1,5 +1,5 @@
 //! --class-path src --library tink_core
-import setup_ivy.Platform;
+import setup_ant.Platform;
 
 /** Updates the version number in the sources. **/
 function main() {

@@ -13,8 +13,14 @@ class Setup {
 	/** The release to download and install. **/
 	public final release: Release;
 
+	/** Value indicating whether to fetch the external libraries required by Ant optional tasks. **/
+	final optionalTasks: Bool;
+
 	/** Creates a new setup. **/
-	public function new(release: Release) this.release = release;
+	public function new(release: Release, optionalTasks = false) {
+		this.release = release;
+		this.optionalTasks = optionalTasks;
+	}
 
 	/**
 		Downloads and extracts the ZIP archive of the HashLink VM.
@@ -23,7 +29,7 @@ class Setup {
 	public function download() return ToolCache.downloadTool(release.url).toPromise()
 		.next(file -> ToolCache.extractZip(file))
 		.next(path -> findSubfolder(path).next(name -> normalizeSeparator(Path.join([path, name]))))
-		.next(antHome -> fetchOptionalTasks(antHome).next(_ -> antHome));
+		.next(antHome -> optionalTasks ? fetchOptionalTasks(antHome).next(_ -> antHome) : Promise.resolve(antHome));
 
 	/**
 		Installs the HashLink VM, after downloading it if required.

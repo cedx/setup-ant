@@ -7,6 +7,10 @@ branding:
   icon: download
 
 inputs:
+  optional-tasks:
+    description: Whether to fetch the external libraries required by Ant optional tasks.
+    default: false
+    required: false
   version:
     description: The version constraint of the Apache Ant binary.
     default: latest

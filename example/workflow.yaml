@@ -27,7 +27,7 @@ jobs:
       - name: Install dependencies
         run: ant install
       - name: Run tests
-        run: ant test
+        run: ant -emacs test
       - name: Collect code coverage
         if: success()
         uses: codecov/codecov-action@v3

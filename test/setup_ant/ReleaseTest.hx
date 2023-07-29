@@ -27,10 +27,10 @@ using AssertionTools;
 	}
 
 	/** Tests the `url` property. **/
-	@:variant(setup_ant.ReleaseTest.existingRelease, "https://dlcdn.apache.org/ant/binaries/apache-ant-1.10.13-bin.zip")
-	@:variant(setup_ant.ReleaseTest.nonExistentRelease, "https://dlcdn.apache.org/ant/binaries/apache-ant-666.6.6-bin.zip")
+	@:variant(setup_ant.ReleaseTest.existingRelease, "apache-ant-1.10.13-bin.zip")
+	@:variant(setup_ant.ReleaseTest.nonExistentRelease, "apache-ant-666.6.6-bin.zip")
 	public function url(input: Release, output: String)
-		return assert(input.url == output);
+		return assert(input.url == 'https://dlcdn.apache.org/ant/binaries/$output');
 
 	/** Tests the `find()` method. **/
 	@:variant("*", Some(setup_ant.Release.latest.version))

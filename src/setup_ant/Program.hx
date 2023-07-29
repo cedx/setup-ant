@@ -10,7 +10,7 @@ function main() {
 		case Failure(_): Core.setFailed("Invalid version constraint.");
 		case Success(constraint): switch Release.find(constraint) {
 			case None: Core.setFailed("No release matching the version constraint.");
-			case Some(release): new Setup(release).install().handle(outcome -> switch outcome {
+			case Some(release): new Setup(release, Core.getBooleanInput("optional-tasks")).install().handle(outcome -> switch outcome {
 				case Failure(error): Core.setFailed(error.message);
 				case Success(path): Core.info('Apache Ant ${release.version} successfully installed in "${path}".');
 			});

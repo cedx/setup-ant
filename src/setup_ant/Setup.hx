@@ -13,20 +13,14 @@ class Setup {
 	/** The release to download and install. **/
 	public final release: Release;
 
-	/** Value indicating whether to fetch the external libraries required by Ant optional tasks. **/
-	final optionalTasks: Bool;
-
 	/** Creates a new setup. **/
-	public function new(release: Release, optionalTasks = false) {
-		this.release = release;
-		this.optionalTasks = optionalTasks;
-	}
+	public function new(release: Release) this.release = release;
 
 	/**
 		Downloads and extracts the ZIP archive of Apache Ant.
 		Returns the path to the extracted directory.
 	**/
-	public function download() return ToolCache.downloadTool(release.url).toPromise()
+	public function download(optionalTasks = false) return ToolCache.downloadTool(release.url).toPromise()
 		.next(file -> ToolCache.extractZip(file))
 		.next(path -> findSubfolder(path).next(name -> normalizeSeparator(Path.join([path, name]))))
 		.next(antHome -> optionalTasks ? fetchOptionalTasks(antHome).next(_ -> antHome) : Promise.resolve(antHome));
@@ -35,11 +29,11 @@ class Setup {
 		Installs Apache Ant, after downloading it if required.
 		Returns the path to the install directory.
 	**/
-	public function install() {
+	public function install(optionalTasks = false) {
 		final directory = ToolCache.find("ant", release.version);
 		final promise = directory.length > 0
 			? Promise.resolve(directory)
-			: download().next(path -> ToolCache.cacheDir(path, "ant", release.version));
+			: download(optionalTasks).next(path -> ToolCache.cacheDir(path, "ant", release.version));
 
 		return promise.next(path -> {
 			final normalizedPath = normalizeSeparator(path);
@@ -52,8 +46,8 @@ class Setup {
 	/** Fetches the external libraries required by Ant optional tasks. **/
 	function fetchOptionalTasks(antHome: String) {
 		final workingDirectory = Sys.getCwd();
-		Sys.setCwd(antHome);
 		Sys.putEnv("ANT_HOME", antHome);
+		Sys.setCwd(antHome);
 		Sys.command("ant -buildfile fetch.xml -noinput -silent -Ddest=system");
 		Sys.setCwd(workingDirectory);
 		return Promise.NOISE;

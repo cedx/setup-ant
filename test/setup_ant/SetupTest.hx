@@ -14,7 +14,7 @@ using haxe.io.Path;
 	/** Tests the `download()` method. **/
 	@:timeout(180_000)
 	public function download() {
-		new Setup(Release.latest, true).download().next(path -> {
+		new Setup(Release.latest).download(true).next(path -> {
 			final jars = FileSystem.readDirectory(Path.join([path, "lib"])).filter(file -> file.extension() == "jar");
 			asserts.assert(FileSystem.exists(Path.join([path, "bin", Sys.systemName() == "Windows" ? "ant.bat" : "ant"])));
 			asserts.assert(jars.filter(file -> file.startsWith("ivy-")).length == 1);
@@ -26,7 +26,7 @@ using haxe.io.Path;
 	/** Tests the `install()` method. **/
 	@:timeout(180_000)
 	public function install() {
-		new Setup(Release.latest, false).install().next(path -> {
+		new Setup(Release.latest).install(false).next(path -> {
 			asserts.assert(Sys.getEnv("ANT_HOME") == path);
 			asserts.assert(Sys.getEnv("PATH").contains(path));
 		}).handle(asserts.handle);

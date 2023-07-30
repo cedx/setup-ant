@@ -12,7 +12,7 @@ function main() {
 		case Failure(_): Core.setFailed("Invalid version constraint.");
 		case Success(constraint): switch Release.find(constraint) {
 			case None: Core.setFailed("No release matching the version constraint.");
-			case Some(release): new Setup(release, optionalTasks).install().handle(outcome -> switch outcome {
+			case Some(release): new Setup(release).install(optionalTasks).handle(outcome -> switch outcome {
 				case Failure(error):
 					Core.setFailed(error.message);
 				case Success(path):

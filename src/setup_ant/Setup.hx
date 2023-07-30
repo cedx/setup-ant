@@ -7,7 +7,7 @@ using Lambda;
 using StringTools;
 using haxe.io.Path;
 
-/** Manages the download and installation of the HashLink VM. **/
+/** Manages the download and installation of Apache Ant. **/
 class Setup {
 
 	/** The release to download and install. **/
@@ -23,7 +23,7 @@ class Setup {
 	}
 
 	/**
-		Downloads and extracts the ZIP archive of the HashLink VM.
+		Downloads and extracts the ZIP archive of Apache Ant.
 		Returns the path to the extracted directory.
 	**/
 	public function download() return ToolCache.downloadTool(release.url).toPromise()
@@ -32,7 +32,7 @@ class Setup {
 		.next(antHome -> optionalTasks ? fetchOptionalTasks(antHome).next(_ -> antHome) : Promise.resolve(antHome));
 
 	/**
-		Installs the HashLink VM, after downloading it if required.
+		Installs Apache Ant, after downloading it if required.
 		Returns the path to the install directory.
 	**/
 	public function install() {

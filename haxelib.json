@@ -8,5 +8,5 @@
 	"releasenote": "Initial release.",
 	"tags": ["action", "ant", "ci", "github", "ivy", "java", "test", "workflow"],
 	"url": "https://docs.belin.io/setup-ant",
-	"version": "1.0.0"
+	"version": "1.1.0"
 }

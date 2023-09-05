@@ -5,7 +5,7 @@
 	"description": "Set up your GitHub Actions workflow with a specific version of Apache Ant.",
 	"license": "MIT",
 	"name": "setup_ant",
-	"releasenote": "Initial release.",
+	"releasenote": "Added Ant 1.10.14 to the supported releases.",
 	"tags": ["action", "ant", "ci", "github", "ivy", "java", "test", "workflow"],
 	"url": "https://docs.belin.io/setup-ant",
 	"version": "1.1.0"

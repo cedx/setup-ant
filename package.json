@@ -6,7 +6,7 @@
 	"license": "MIT",
 	"name": "@cedx/setup-ant",
 	"private": true,
-	"repository": "github:cedx/setup-ant",
+	"repository": "cedx/setup-ant",
 	"type": "commonjs",
 	"version": "1.1.0",
 	"author": {

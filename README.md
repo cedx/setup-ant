@@ -1,5 +1,5 @@
 # Setup Ant
-![Node.js](https://badgen.net/badge/node/%3E%3D16.0.0/green) ![Action](https://badgen.net/badge/action/v1.1.0/blue) ![License](https://badgen.net/badge/license/MIT/blue) ![Coverage](https://badgen.net/codecov/c/github/cedx/setup-ant)
+![Node.js](https://badgen.net/badge/node/%3E%3D20.0.0/green) ![Action](https://badgen.net/badge/action/v1.1.0/blue) ![License](https://badgen.net/badge/license/MIT/blue) ![Coverage](https://badgen.net/codecov/c/github/cedx/setup-ant)
 
 Set up your [GitHub Actions](https://docs.github.com/en/actions) workflow with a specific version of [Apache Ant](https://ant.apache.org).
 

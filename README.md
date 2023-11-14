@@ -13,4 +13,4 @@ Set up your [GitHub Actions](https://docs.github.com/en/actions) workflow with a
 - [Submit an issue](https://github.com/cedx/setup-ant/issues)
 
 ## License
-[Setup Ant](https://cedx.github.io/setup-ant) is distributed under the MIT License.
+[Setup Ant](https://github.com/cedx/setup-ant) is distributed under the MIT License.

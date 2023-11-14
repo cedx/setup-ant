@@ -1,8 +1,6 @@
 {
 	"bugs": "https://github.com/cedx/setup-ant/issues",
 	"description": "Set up your GitHub Actions workflow with a specific version of Apache Ant.",
-	"files": [],
-	"homepage": "https://cedx.github.io/setup-ant",
 	"license": "MIT",
 	"name": "@cedx/setup-ant",
 	"private": true,

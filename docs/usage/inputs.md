@@ -11,7 +11,7 @@ Allowed values are:
 - a strict version number: `=1.0.0`, `=1.10.0`, etc.
 - a version specification: `1.10.x`, `>=1.0.0 <1.10.0`, `=1.0.0 || ^1.10.0`, etc.
 
-> The version constraint follows the syntax and semantics of the [tink_semver](https://lib.haxe.org/p/tink_semver) package.
+> The version constraint follows the syntax and semantics of the [tink_semver](https://github.com/haxetink/tink_semver) library.
 
 ## **optional-tasks**: boolean
 By default, the external libraries required by each of the [optional tasks](https://ant.apache.org/manual/install.html#optionalTasks) are not installed.

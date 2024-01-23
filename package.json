@@ -62,6 +62,7 @@
 		"clean": "node tool/clean.js",
 		"dist": "npm run clean && npm run build && node tool/dist.js && git update-index --chmod=+x bin/setup_ant.mjs",
 		"doc": "typedoc --options etc/typedoc.json && node tool/doc.js",
-		"lint": "tsc --project tsconfig.json && eslint --config=etc/eslint.json src tool"
+		"lint": "tsc --project tsconfig.json && eslint --config=etc/eslint.json src test tool",
+		"test": "npm run build && node --test --test-reporter=lcov --test-reporter-destination=var/lcov.info --test-reporter=spec --test-reporter-destination=stdout"
 	}
 }

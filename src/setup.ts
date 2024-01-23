@@ -31,9 +31,9 @@ export class Setup {
 	 */
 	async download(optionalTasks = false): Promise<string> {
 		const path = await extractZip(await downloadTool(this.release.url.href));
-		const antHome = join(path, await this.#findSubfolder(path));
-		if (optionalTasks) await this.fetchOptionalTasks(antHome);
-		return antHome;
+		const directory = join(path, await this.#findSubfolder(path));
+		if (optionalTasks) await this.fetchOptionalTasks(directory);
+		return directory;
 	}
 
 	/**
@@ -42,15 +42,15 @@ export class Setup {
 	 * @returns The path to the installation directory.
 	 */
 	async install(optionalTasks = false): Promise<string> {
-		let antHome = find("ant", this.release.version);
-		if (!antHome) {
+		let directory = find("ant", this.release.version);
+		if (!directory) {
 			const path = await this.download(optionalTasks);
-			antHome = await cacheDir(path, "ant", this.release.version);
+			directory = await cacheDir(path, "ant", this.release.version);
 		}
 
-		addPath(join(antHome, "bin"));
-		exportVariable("ANT_HOME", antHome);
-		return antHome;
+		addPath(join(directory, "bin"));
+		exportVariable("ANT_HOME", directory);
+		return directory;
 	}
 
 	/**

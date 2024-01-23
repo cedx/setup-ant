@@ -5,15 +5,15 @@
 	"name": "@cedx/setup-ant",
 	"private": true,
 	"repository": "cedx/setup-ant",
-	"type": "commonjs",
-	"version": "1.1.0",
+	"type": "module",
+	"version": "2.0.0",
 	"author": {
 		"email": "cedric@belin.io",
 		"name": "Cédric Belin",
 		"url": "https://belin.io"
 	},
 	"bin": {
-		"setup_ant": "./bin/setup_ant.js"
+		"setup_ant": "./bin/setup_ant.mjs"
 	},
 	"dependencies": {
 		"@actions/core": "^1.10.1",
@@ -24,5 +24,30 @@
 	},
 	"engines": {
 		"node": ">=20.0.0"
+	},
+	"exports": {
+		"types": "./lib/index.d.ts",
+		"import": "./lib/index.js"
+	},
+	"files": [
+		"lib/",
+		"src/"
+	],
+	"keywords": [
+		"action",
+		"ant",
+		"ci",
+		"github",
+		"ivy",
+		"java",
+		"test",
+		"workflow"
+	],
+	"scripts": {
+		"build": "tsc --project src/tsconfig.json && esbuild --allow-overwrite --bundle --format=esm --legal-comments=none --log-level=warning --minify --outfile=bin/setup_ant.mjs --platform=node src/cli.ts",
+		"clean": "node tool/clean.js",
+		"dist": "npm run clean && npm run build && node tool/dist.js && git update-index --chmod=+x bin/setup_ant.mjs",
+		"doc": "typedoc --options etc/typedoc.json && node tool/doc.js",
+		"lint": "tsc --project tsconfig.json && eslint --config=etc/eslint.json src tool"
 	}
 }

@@ -1,8 +1,11 @@
 import {getBooleanInput, getInput, info, setFailed} from "@actions/core";
 import {Release, Setup} from "./index.js";
 
-// Start the application.
-try {
+/**
+ * Application entry point.
+ * @returns Resolves when TODO.
+ */
+async function main(): Promise<void> {
 	const version = getInput("version");
 	const release = Release.find(!version || version == "latest" ? "*" : version);
 	if (!release) throw Error("No release matching the version constraint.");
@@ -12,6 +15,6 @@ try {
 	const installed = optionalTasks ? "installed with optional tasks" : "installed";
 	info(`Apache Ant ${release.version} successfully ${installed} in "${path}".`);
 }
-catch (error) {
-	setFailed(error instanceof Error ? error : String(error));
-}
+
+// Start the application.
+main().catch(error => setFailed(error instanceof Error ? error : String(error)));

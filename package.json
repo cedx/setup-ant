@@ -58,7 +58,7 @@
 		"workflow"
 	],
 	"scripts": {
-		"build": "tsc --project src/tsconfig.json && esbuild --allow-overwrite --bundle --format=esm --legal-comments=none --log-level=warning --minify --outfile=bin/setup_ant.cjs --platform=node src/cli.ts",
+		"build": "tsc --project src/tsconfig.json && esbuild --allow-overwrite --bundle --legal-comments=none --log-level=warning --minify --outfile=bin/setup_ant.cjs --platform=node src/cli.ts",
 		"clean": "node tool/clean.js",
 		"dist": "npm run clean && npm run build && node tool/dist.js && git update-index --chmod=+x bin/setup_ant.cjs",
 		"doc": "typedoc --options etc/typedoc.json && node tool/doc.js",

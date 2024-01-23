@@ -29,8 +29,3 @@ jobs:
         run: ant install
       - name: Run tests
         run: ant -emacs test
-      - name: Collect code coverage
-        if: success()
-        uses: codecov/codecov-action@v3
-        with:
-          files: coverage.xml

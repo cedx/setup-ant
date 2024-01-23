@@ -9,7 +9,7 @@ import type {Release} from "./release.js";
 /**
  * Manages the download and installation of Apache Ant.
  */
-class Setup {
+export class Setup {
 
 	/**
 	 * The release to download and install.
@@ -35,7 +35,7 @@ class Setup {
 		if (optionalTasks) await this.fetchOptionalTasks(antHome);
 		return antHome;
 	}
-	
+
 	/**
 	 * Installs Apache Ant, after downloading it if required.
 	 * @param optionalTasks Value indicating whether to fetch the Ant optional tasks.

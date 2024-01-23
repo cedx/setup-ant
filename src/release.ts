@@ -1,5 +1,5 @@
 import semver from "semver";
-import releases from "../res/releases.json" with {type: "json"};
+import data from "./data.js";
 
 /**
  * Represents a GitHub release.
@@ -14,7 +14,7 @@ export class Release {
 	/**
 	 * The list of all releases.
 	 */
-	static readonly #data = releases.map(release => new this(release.version));
+	static readonly #data = data.map(release => new this(release.version));
 
 	/**
 	 * The version number.

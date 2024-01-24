@@ -1,4 +1,4 @@
-import {equal, ok} from "node:assert/strict";
+import {doesNotReject, equal, ok} from "node:assert/strict";
 import {access, readdir} from "node:fs/promises";
 import {extname, join, resolve} from "node:path";
 import {env, platform} from "node:process";
@@ -15,7 +15,7 @@ describe("Setup", () => {
 	describe(".download()", () => {
 		it("should properly download and extract Apache Ant", async () => {
 			const path = await new Setup(Release.latest).download(true);
-			await access(join(path, "bin", platform == "win32" ? "ant.bat" : "ant"));
+			await doesNotReject(access(join(path, "bin", platform == "win32" ? "ant.bat" : "ant")));
 
 			const jars = (await readdir(join(path, "lib"))).filter(file => extname(file) == ".jar");
 			equal(jars.filter(file => file.startsWith("ivy-")).length, 1);

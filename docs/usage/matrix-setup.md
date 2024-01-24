@@ -11,12 +11,12 @@ jobs:
         platform: [macos-latest, ubuntu-latest, windows-latest]
         version: [1.9.x, latest]
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 21
-      - uses: cedx/setup-ant@v1
+      - uses: cedx/setup-ant@v2
         with:
           optional-tasks: true
           version: ${{matrix.version}}

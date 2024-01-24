@@ -2,7 +2,7 @@ import semver from "semver";
 import data from "./data.js";
 
 /**
- * Represents a GitHub release.
+ * Represents an Apache Ant release.
  */
 export class Release {
 

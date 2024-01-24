@@ -32,7 +32,7 @@ export class Setup {
 	async download(optionalTasks = false): Promise<string> {
 		const path = await extractZip(await downloadTool(this.release.url.href));
 		const directory = join(path, await this.#findSubfolder(path));
-		if (optionalTasks) await this.fetchOptionalTasks(directory);
+		if (optionalTasks) await this.#fetchOptionalTasks(directory);
 		return directory;
 	}
 
@@ -58,7 +58,7 @@ export class Setup {
 	 * @param antHome The path to the Ant directory.
 	 * @returns Resolves when the optional tasks have been fetched.
 	 */
-	fetchOptionalTasks(antHome: string): Promise<unknown> {
+	#fetchOptionalTasks(antHome: string): Promise<unknown> {
 		return promisify(exec)("ant -buildfile fetch.xml -noinput -silent -Ddest=system", {cwd: antHome, env: {ANT_HOME: antHome}});
 	}
 

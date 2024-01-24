@@ -17,7 +17,7 @@ Allowed values are:
 By default, the external libraries required by each of the [optional tasks](https://ant.apache.org/manual/install.html#optionalTasks) are not installed.
 It's up to you to ensure that these libraries are properly added to Ant's class path.
 
-You can automate this installation process by setting the `optional-tasks` input to `true`. This will run the following command after Ant has been setup:
+You can automate this installation process by setting the `optional-tasks` input to `true`. This will run the following command after Ant has been set up:
 
 ```shell
 ant -buildfile fetch.xml -Ddest=system

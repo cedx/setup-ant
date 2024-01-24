@@ -1,5 +1,5 @@
 # Basic setup
-Setup a specific version of [Apache Ant](https://ant.apache.org):
+Set up a specific version of [Apache Ant](https://ant.apache.org):
 
 ```yaml
 jobs:

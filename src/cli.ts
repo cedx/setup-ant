@@ -3,7 +3,7 @@ import {Release, Setup} from "./index.js";
 
 /**
  * Application entry point.
- * @returns Resolves when TODO.
+ * @returns Resolves when Apache Ant has been installed.
  */
 async function main(): Promise<void> {
 	const version = getInput("version");

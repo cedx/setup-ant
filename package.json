@@ -42,7 +42,7 @@
 		"src/"
 	],
 	"imports": {
-		"#setup_ant": {
+		"#setupAnt": {
 			"types": "./lib/index.d.ts",
 			"import": "./lib/index.js"
 		}

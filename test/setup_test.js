@@ -12,7 +12,7 @@ describe("Setup", () => {
 	env.RUNNER_TEMP ||= resolve("var/tmp");
 	env.RUNNER_TOOL_CACHE ||= resolve("var/cache");
 
-	describe(".download()", () => {
+	describe("download()", () => {
 		it("should properly download and extract Apache Ant", async () => {
 			const path = await new Setup(Release.latest).download(true);
 			await doesNotReject(access(join(path, "bin", platform == "win32" ? "ant.bat" : "ant")));
@@ -22,7 +22,7 @@ describe("Setup", () => {
 		});
 	});
 
-	describe(".install()", () => {
+	describe("install()", () => {
 		it("should add the Ant directory to the PATH environment variable", async () => {
 			const path = await new Setup(Release.latest).install(false);
 			equal(env.ANT_HOME, path);

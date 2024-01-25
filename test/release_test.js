@@ -9,23 +9,23 @@ describe("Release", () => {
 	const existingRelease = new Release("1.10.14");
 	const nonExistentRelease = new Release("666.6.6");
 
-	describe(".exists", () => {
+	describe("exists", () => {
 		it("should return `false` if the release does not exist", () => ok(!nonExistentRelease.exists));
 		it("should return `true` if the release exists", () => ok(existingRelease.exists));
 	});
 
-	describe(".latest", () => {
+	describe("latest", () => {
 		it("should exist", () => ok(Release.latest.exists));
 	});
 
-	describe(".url", () => {
+	describe("url", () => {
 		it("should return the URL of the Ant archive", () => {
 			equal(existingRelease.url.href, "https://dlcdn.apache.org/ant/binaries/apache-ant-1.10.14-bin.zip");
 			equal(nonExistentRelease.url.href, "https://dlcdn.apache.org/ant/binaries/apache-ant-666.6.6-bin.zip");
 		});
 	});
 
-	describe(".find()", () => {
+	describe("find()", () => {
 		it("should return `null` if no release matches the version constraint", () =>
 			ok(!Release.find("666.6.6")));
 
@@ -37,7 +37,7 @@ describe("Release", () => {
 		});
 	});
 
-	describe(".get()", () => {
+	describe("get()", () => {
 		it("should return `null` if no release matches to the version number", () => ok(!Release.get("666.6.6")));
 		it("should return the release corresponding to the version number if it exists", () => equal(Release.get("1.10.14")?.version, "1.10.14"));
 	});

@@ -1,5 +1,5 @@
 import {getBooleanInput, getInput, info, setFailed} from "@actions/core";
-import {Release, Setup} from "../index.js";
+import {Release, Setup} from "./index.js";
 
 /**
  * Application entry point.

@@ -4,8 +4,8 @@
 Set up your [GitHub Actions](https://docs.github.com/en/actions) workflow with a specific version of [Apache Ant](https://ant.apache.org).
 
 ## Documentation
-- [User guide](https://cedx.github.io/setup-ant)
-- [API reference](https://cedx.github.io/setup-ant/api)
+- [User guide](https://docs.belin.io/setup-ant)
+- [API reference](https://docs.belin.io/setup-ant/api)
 
 ## Development
 - [Git repository](https://github.com/cedx/setup-ant)

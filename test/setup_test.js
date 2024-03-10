@@ -3,7 +3,7 @@ import {access, readdir} from "node:fs/promises";
 import {extname, join, resolve} from "node:path";
 import {env, platform} from "node:process";
 import {describe, it} from "node:test";
-import {Release, Setup} from "#setupAnt";
+import {Release, Setup} from "@cedx/setup-ant";
 
 /**
  * Tests the features of the {@link Setup} class.

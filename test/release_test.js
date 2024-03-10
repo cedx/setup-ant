@@ -1,6 +1,6 @@
 import {equal, ok} from "node:assert/strict";
 import {describe, it} from "node:test";
-import {Release} from "#setupAnt";
+import {Release} from "@cedx/setup-ant";
 
 /**
  * Tests the features of the {@link Release} class.

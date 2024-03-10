@@ -1,6 +1,7 @@
 {
 	"bugs": "https://github.com/cedx/setup-ant/issues",
 	"description": "Set up your GitHub Actions workflow with a specific version of Apache Ant.",
+	"homepage": "https://docs.belin.io/setup-ant",
 	"license": "MIT",
 	"name": "@cedx/setup-ant",
 	"private": true,
@@ -28,8 +29,8 @@
 		"esbuild": "^0.20.1",
 		"eslint": "^8.57.0",
 		"execa": "^8.0.1",
-		"typedoc": "^0.25.11",
-		"typescript": "^5.3.3",
+		"typedoc": "^0.25.12",
+		"typescript": "^5.4.2",
 		"typescript-eslint": "^7.1.1"
 	},
 	"engines": {

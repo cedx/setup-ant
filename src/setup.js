@@ -4,7 +4,6 @@ import {join} from "node:path";
 import {promisify} from "node:util";
 import {addPath, exportVariable} from "@actions/core";
 import {cacheDir, downloadTool, extractZip, find} from "@actions/tool-cache";
-import type {Release} from "./release.js";
 
 /**
  * Manages the download and installation of Apache Ant.
@@ -13,23 +12,25 @@ export class Setup {
 
 	/**
 	 * The release to download and install.
+	 * @type {import("./release.js").Release}
+	 * @readonly
 	 */
-	readonly release: Release;
+	release;
 
 	/**
 	 * Creates a new setup.
-	 * @param release The release to download and install.
+	 * @param {import("./release.js").Release} release The release to download and install.
 	 */
-	constructor(release: Release) {
+	constructor(release) {
 		this.release = release;
 	}
 
 	/**
 	 * Downloads and extracts the ZIP archive of Apache Ant.
-	 * @param optionalTasks Value indicating whether to fetch the Ant optional tasks.
-	 * @returns The path to the extracted directory.
+	 * @param {boolean} optionalTasks Value indicating whether to fetch the Ant optional tasks.
+	 * @returns {Promise<string>} The path to the extracted directory.
 	 */
-	async download(optionalTasks = false): Promise<string> {
+	async download(optionalTasks = false) {
 		const path = await extractZip(await downloadTool(this.release.url.href));
 		const directory = join(path, await this.#findSubfolder(path));
 		if (optionalTasks) await this.#fetchOptionalTasks(directory);
@@ -38,10 +39,10 @@ export class Setup {
 
 	/**
 	 * Installs Apache Ant, after downloading it if required.
-	 * @param optionalTasks Value indicating whether to fetch the Ant optional tasks.
-	 * @returns The path to the installation directory.
+	 * @param {boolean} optionalTasks Value indicating whether to fetch the Ant optional tasks.
+	 * @returns Promise<string> The path to the installation directory.
 	 */
-	async install(optionalTasks = false): Promise<string> {
+	async install(optionalTasks = false) {
 		let directory = find("ant", this.release.version);
 		if (!directory) {
 			const path = await this.download(optionalTasks);
@@ -55,19 +56,19 @@ export class Setup {
 
 	/**
 	 * Fetches the external libraries required by Ant optional tasks.
-	 * @param antHome The path to the Ant directory.
-	 * @returns Resolves when the optional tasks have been fetched.
+	 * @param {string} antHome The path to the Ant directory.
+	 * @returns {Promise<unknown>} Resolves when the optional tasks have been fetched.
 	 */
-	#fetchOptionalTasks(antHome: string): Promise<unknown> {
+	#fetchOptionalTasks(antHome) {
 		return promisify(exec)("ant -buildfile fetch.xml -noinput -silent -Ddest=system", {cwd: antHome, env: {ANT_HOME: antHome}});
 	}
 
 	/**
 	 * Determines the name of the single subfolder in the specified directory.
-	 * @param directory The directory path.
-	 * @returns The name of the single subfolder in the specified directory.
+	 * @param {string} directory The directory path.
+	 * @returns {Promise<string>} The name of the single subfolder in the specified directory.
 	 */
-	async #findSubfolder(directory: string): Promise<string> {
+	async #findSubfolder(directory) {
 		const folders = (await readdir(directory, {withFileTypes: true})).filter(entity => entity.isDirectory());
 		switch (folders.length) {
 			case 0: throw Error(`No subfolder found in: ${directory}.`);

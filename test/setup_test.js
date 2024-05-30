@@ -14,7 +14,7 @@ describe("Setup", () => {
 
 	describe("download()", () => {
 		it("should properly download and extract Apache Ant", async () => {
-			const path = await new Setup(Release.latest).download(true);
+			const path = await new Setup(Release.latest).download({optionalTasks: true});
 			await doesNotReject(access(join(path, "bin", platform == "win32" ? "ant.bat" : "ant")));
 
 			const jars = (await readdir(join(path, "lib"))).filter(file => extname(file) == ".jar");
@@ -24,7 +24,7 @@ describe("Setup", () => {
 
 	describe("install()", () => {
 		it("should add the Ant directory to the PATH environment variable", async () => {
-			const path = await new Setup(Release.latest).install(false);
+			const path = await new Setup(Release.latest).install({optionalTasks: false});
 			equal(env.ANT_HOME, path);
 			ok(env.PATH?.includes(path));
 		});

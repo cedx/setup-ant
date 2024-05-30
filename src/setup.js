@@ -27,25 +27,25 @@ export class Setup {
 
 	/**
 	 * Downloads and extracts the ZIP archive of Apache Ant.
-	 * @param {boolean} optionalTasks Value indicating whether to fetch the Ant optional tasks.
+	 * @param {Partial<{optionalTasks: boolean}>} options Value indicating whether to fetch the Ant optional tasks.
 	 * @returns {Promise<string>} The path to the extracted directory.
 	 */
-	async download(optionalTasks = false) {
+	async download(options = {}) {
 		const path = await extractZip(await downloadTool(this.release.url.href));
 		const directory = join(path, await this.#findSubfolder(path));
-		if (optionalTasks) await this.#fetchOptionalTasks(directory);
+		if (options.optionalTasks) await this.#fetchOptionalTasks(directory);
 		return directory;
 	}
 
 	/**
 	 * Installs Apache Ant, after downloading it if required.
-	 * @param {boolean} optionalTasks Value indicating whether to fetch the Ant optional tasks.
+	 * @param {Partial<{optionalTasks: boolean}>} options Value indicating whether to fetch the Ant optional tasks.
 	 * @returns Promise<string> The path to the installation directory.
 	 */
-	async install(optionalTasks = false) {
+	async install(options = {}) {
 		let directory = find("ant", this.release.version);
 		if (!directory) {
-			const path = await this.download(optionalTasks);
+			const path = await this.download(options);
 			directory = await cacheDir(path, "ant", this.release.version);
 		}
 

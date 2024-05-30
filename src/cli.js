@@ -12,7 +12,7 @@ async function main() {
 	if (!release) throw Error("No release matching the version constraint.");
 
 	const optionalTasks = getBooleanInput("optional-tasks");
-	const path = await new Setup(release).install(optionalTasks);
+	const path = await new Setup(release).install({optionalTasks});
 	const installed = optionalTasks ? "installed with optional tasks" : "installed";
 	info(`Apache Ant ${release.version} successfully ${installed} in "${path}".`);
 }

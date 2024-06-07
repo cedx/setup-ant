@@ -34,7 +34,7 @@ export async function doc() {
 export async function lint() {
 	await build();
 	await $`tsc --project tsconfig.json`;
-	return $`eslint --config=etc/eslint.config.js gulpfile.js etc src test`;
+	return $`eslint --config=etc/eslint.config.js gulpfile.js src test`;
 }
 
 // Publishes the package.

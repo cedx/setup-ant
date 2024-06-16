@@ -1,13 +1,13 @@
 {
 	"bugs": "https://github.com/cedx/setup-ant/issues",
 	"description": "Set up your GitHub Actions workflow with a specific version of Apache Ant.",
-	"homepage": "https://docs.belin.io/setup-ant",
+	"homepage": "https://github.com/cedx/setup-ant",
 	"license": "MIT",
 	"name": "@cedx/setup-ant",
 	"private": true,
 	"repository": "cedx/setup-ant",
 	"type": "module",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"author": {
 		"email": "cedric@belin.io",
 		"name": "Cédric Belin",
@@ -33,7 +33,6 @@
 		"execa": "^9.2.0",
 		"globals": "^15.4.0",
 		"gulp": "^5.0.0",
-		"typedoc": "^0.25.13",
 		"typescript": "^5.4.5"
 	},
 	"engines": {

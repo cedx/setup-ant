@@ -8,72 +8,63 @@ export class Release {
 
 	/**
 	 * The base URL of the releases.
-	 * @type {URL}
-	 * @readonly
 	 */
-	static #baseUrl = new URL("https://dlcdn.apache.org/ant/binaries/");
+	static readonly #baseUrl = new URL("https://dlcdn.apache.org/ant/binaries/");
 
 	/**
 	 * The list of all releases.
-	 * @type {Release[]}
-	 * @readonly
 	 */
-	static #data = data.map(release => new this(release.version));
+	static readonly #data: Release[] = data.map(release => new this(release.version));
 
 	/**
 	 * The version number.
-	 * @type {string}
-	 * @readonly
 	 */
-	version;
+	readonly version: string;
 
 	/**
 	 * Creates a new release.
-	 * @param {string} version The version number.
+	 * @param version The version number.
 	 */
-	constructor(version) {
+	constructor(version: string) {
 		this.version = version;
 	}
 
 	/**
 	 * The latest release.
-	 * @type {Release}
 	 */
-	static get latest() {
+	static get latest(): Release {
 		return this.#data[0];
 	}
 
 	/**
 	 * Value indicating whether this release exists.
-	 * @type {boolean}
 	 */
-	get exists() {
+	get exists(): boolean {
 		return Release.#data.some(release => release.version == this.version);
 	}
 
 	/**
 	 * The download URL.
-	 * @type {URL}
 	 */
-	get url() {
+	get url(): URL {
 		return new URL(`apache-ant-${this.version}-bin.zip`, Release.#baseUrl);
 	}
 
 	/**
 	 * Finds a release that matches the specified version constraint.
-	 * @param {string} constraint The version constraint.
-	 * @returns {Release|null} The release corresponding to the specified constraint.
+	 * @param constraint The version constraint.
+	 * @returns The release corresponding to the specified constraint.
 	 */
-	static find(constraint) {
+	static find(constraint: string): Release|null {
 		return this.#data.find(release => semver.satisfies(release.version, constraint)) ?? null;
 	}
 
 	/**
 	 * Gets the release corresponding to the specified version.
-	 * @param {string} version The version number of a release.
-	 * @returns {Release|null} The release corresponding to the specified version.
+	 * @param version The version number of a release.
+	 * @returns The release corresponding to the specified version.
 	 */
-	static get(version) {
+	static get(version: string): Release|null {
 		return this.#data.find(release => release.version == version) ?? null;
 	}
 }

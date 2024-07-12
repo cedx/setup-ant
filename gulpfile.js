@@ -2,16 +2,20 @@ import {readFile, writeFile} from "node:fs/promises";
 import {env} from "node:process";
 import {deleteAsync} from "del";
 import esbuild from "esbuild";
-import {$} from "execa";
+import {execa} from "execa";
 import gulp from "gulp";
 import pkg from "./package.json" with {type: "json"};
 
+// Runs a command.
+const $ = execa({preferLocal: true, stdio: "inherit"});
+
+// Builds the project.
 export async function build() {
 	await $`tsc --project src`;
 	return esbuild.build({
 		banner: {js: "#!/usr/bin/env node"},
 		bundle: true,
-		entryPoints: ["src/cli.js"],
+		entryPoints: ["src/cli.ts"],
 		legalComments: "none",
 		minify: true,
 		outfile: "bin/setup_ant.cjs",

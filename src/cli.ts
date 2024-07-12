@@ -4,9 +4,9 @@ import {Setup} from "./setup.js";
 
 /**
  * Application entry point.
- * @returns {Promise<void>} Resolves when Apache Ant has been installed.
+ * @returns Resolves when Apache Ant has been installed.
  */
-async function main() {
+async function main(): Promise<void> {
 	const version = getInput("version");
 	const release = Release.find(!version || version == "latest" ? "*" : version);
 	if (!release) throw Error("No release matching the version constraint.");
@@ -18,4 +18,4 @@ async function main() {
 }
 
 // Start the application.
-main().catch(error => setFailed(error instanceof Error ? error : String(error)));
+main().catch((error: unknown) => setFailed(error instanceof Error ? error : String(error)));

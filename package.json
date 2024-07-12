@@ -29,7 +29,6 @@
 		"del": "^7.1.0",
 		"esbuild": "^0.23.0",
 		"execa": "^9.3.0",
-		"globals": "^15.8.0",
 		"gulp": "^5.0.0",
 		"typescript": "^5.5.3",
 		"typescript-eslint": "^8.0.0-alpha.41"

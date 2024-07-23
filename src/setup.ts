@@ -1,9 +1,9 @@
+import {addPath, exportVariable} from "@actions/core";
+import {cacheDir, downloadTool, extractZip, find} from "@actions/tool-cache";
 import {exec} from "node:child_process";
 import {readdir} from "node:fs/promises";
 import {join} from "node:path";
 import {promisify} from "node:util";
-import {addPath, exportVariable} from "@actions/core";
-import {cacheDir, downloadTool, extractZip, find} from "@actions/tool-cache";
 import type {Release} from "./release.js";
 
 /**

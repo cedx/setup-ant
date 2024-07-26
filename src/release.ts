@@ -14,7 +14,7 @@ export class Release {
 	/**
 	 * The list of all releases.
 	 */
-	static readonly #data: Release[] = data.map(release => new this(release.version));
+	static readonly #data: Array<Release> = data.map(release => new this(release.version));
 
 	/**
 	 * The version number.

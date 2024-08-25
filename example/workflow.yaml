@@ -16,7 +16,7 @@ jobs:
           distribution: temurin
           java-version: 21
       - name: Set up Ant
-        uses: cedx/setup-ant@v2
+        uses: cedx/setup-ant@v3
         with:
           optional-tasks: true
           version: latest

@@ -6,45 +6,26 @@
 	"name": "@cedx/setup-ant",
 	"private": true,
 	"repository": "cedx/setup-ant",
-	"type": "module",
-	"version": "2.0.1",
+	"type": "commonjs",
+	"version": "3.0.0",
 	"author": {
 		"email": "cedric@belin.io",
 		"name": "Cédric Belin",
 		"url": "https://belin.io"
 	},
 	"bin": {
-		"setup_ant": "./bin/setup_ant.cjs"
+		"setup_ant": "./bin/setup_ant.js"
 	},
 	"dependencies": {
 		"@actions/core": "^1.10.1",
-		"@actions/tool-cache": "^2.0.1",
-		"semver": "^7.6.3"
+		"@actions/tool-cache": "^2.0.1"
 	},
 	"devDependencies": {
-		"@types/eslint__js": "^8.42.3",
-		"@types/gulp": "^4.0.17",
-		"@types/node": "^22.5.0",
-		"@types/semver": "^7.5.8",
-		"del": "^7.1.0",
-		"esbuild": "^0.23.1",
-		"execa": "^9.3.1",
-		"gulp": "^5.0.0",
-		"typescript": "^5.5.4",
-		"typescript-eslint": "^8.2.0"
+		"esbuild": "^0.23.1"
 	},
 	"engines": {
 		"node": ">=22.0.0"
 	},
-	"exports": {
-		"types": "./lib/index.d.ts",
-		"default": "./lib/index.js"
-	},
-	"files": [
-		"lib/",
-		"src/",
-		"tsconfig.json"
-	],
 	"keywords": [
 		"action",
 		"ant",
@@ -54,10 +35,5 @@
 		"java",
 		"test",
 		"workflow"
-	],
-	"scripts": {
-		"postpublish": "gulp publish",
-		"prepack": "gulp",
-		"test": "gulp build && node --test --test-reporter=spec"
-	}
+	]
 }

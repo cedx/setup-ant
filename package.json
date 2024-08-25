@@ -25,15 +25,5 @@
 	},
 	"engines": {
 		"node": ">=22.0.0"
-	},
-	"keywords": [
-		"action",
-		"ant",
-		"ci",
-		"github",
-		"ivy",
-		"java",
-		"test",
-		"workflow"
-	]
+	}
 }

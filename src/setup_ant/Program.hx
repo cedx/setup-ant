@@ -1,12 +1,12 @@
 package setup_ant;
 
 import js.actions.Core;
-import js.Node.process;
+import js.Node;
 import tink.semver.Constraint;
 
 /** Application entry point. **/
 function main() {
-	process.title = "Setup Ant";
+	Node.process.title = "Setup Ant";
 
 	final optionalTasks = Core.getBooleanInput("optional-tasks");
 	final version = Core.getInput("version");

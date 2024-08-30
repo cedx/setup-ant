@@ -1,5 +1,8 @@
 # Changelog
 
+## Version [3.1.0](https://github.com/cedx/setup-ant/compare/v3.0.0...v3.1.0)
+- Added [Ant](https://ant.apache.org) 1.10.15 to the supported releases.
+
 ## Version [3.0.0](https://github.com/cedx/setup-ant/compare/v2.0.1...v3.0.0)
 - Ported the source code to [Haxe](https://haxe.org).
 

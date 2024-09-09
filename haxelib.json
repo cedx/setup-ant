@@ -8,5 +8,5 @@
 	"releasenote": "Ported the source code to Haxe.",
 	"tags": ["action", "ant", "ci", "github", "ivy", "java", "test", "workflow"],
 	"url": "https://github.com/cedx/setup-ant",
-	"version": "3.1.0"
+	"version": "3.1.1"
 }

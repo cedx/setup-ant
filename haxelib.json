@@ -5,7 +5,7 @@
 	"description": "Set up your GitHub Actions workflow with a specific version of Apache Ant.",
 	"license": "MIT",
 	"name": "setup_ant",
-	"releasenote": "Ported the source code to Haxe.",
+	"releasenote": "Fixed the issue #3.",
 	"tags": ["action", "ant", "ci", "github", "ivy", "java", "test", "workflow"],
 	"url": "https://github.com/cedx/setup-ant",
 	"version": "3.1.1"

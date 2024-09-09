@@ -47,9 +47,9 @@ class Setup {
 	/** Fetches the external libraries required by Ant optional tasks. **/
 	function fetchOptionalTasks(antHome: String): Promise<Noise> {
 		final workingDirectory = Sys.getCwd();
-		Sys.putEnv("ANT_HOME", antHome);
 		Sys.setCwd(antHome);
-		Sys.command("ant -buildfile fetch.xml -noinput -silent -Ddest=system");
+		Sys.putEnv("ANT_HOME", antHome);
+		Sys.command("java -jar lib/ant-launcher.jar -buildfile fetch.xml -noinput -silent -Ddest=system");
 		Sys.setCwd(workingDirectory);
 		return Noise;
 	}

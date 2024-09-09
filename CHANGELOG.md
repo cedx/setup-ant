@@ -1,5 +1,8 @@
 # Changelog
 
+## Version [3.1.1](https://github.com/cedx/setup-ant/compare/v3.1.0...v3.1.1)
+- Fixed the [issue #3](https://github.com/cedx/setup-ant/issues/3).
+
 ## Version [3.1.0](https://github.com/cedx/setup-ant/compare/v3.0.0...v3.1.0)
 - Added [Ant](https://ant.apache.org) 1.10.15 to the supported releases.
 

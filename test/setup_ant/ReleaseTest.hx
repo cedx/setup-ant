@@ -1,7 +1,5 @@
 package setup_ant;
 
-using AssertionTools;
-
 /** Tests the features of the `Release` class. **/
 @:asserts final class ReleaseTest {
 

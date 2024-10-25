@@ -1,4 +1,4 @@
-package setup_ant;
+package ant;
 
 import js.actions.Core;
 import js.actions.ToolCache;

@@ -1,5 +1,5 @@
 //! --class-path src --library tink_core
-import setup_ant.Platform;
+import ant.Platform;
 
 /** Publishes the package. **/
 function main() {

@@ -1,4 +1,4 @@
-package setup_ant;
+package ant;
 
 import coconut.data.List;
 import coconut.data.Model;
@@ -9,7 +9,7 @@ import tink.semver.Constraint;
 import tink.semver.Version;
 
 /** Represents a GitHub release. **/
-@:jsonParse(json -> new setup_ant.Release(json))
+@:jsonParse(json -> new ant.Release(json))
 class Release implements Model {
 
 	/** The latest release. **/

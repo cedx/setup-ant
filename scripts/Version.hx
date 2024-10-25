@@ -1,5 +1,5 @@
 //! --class-path src --library tink_core
-import setup_ant.Platform;
+import ant.Platform;
 import sys.io.File;
 
 /** Updates the version number in the sources. **/

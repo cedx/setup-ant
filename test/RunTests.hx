@@ -6,8 +6,8 @@ import tink.unit.TestBatch;
 /** Runs the test suite. **/
 function main() {
 	final tests = TestBatch.make([
-		new setup_ant.ReleaseTest(),
-		new setup_ant.SetupTest()
+		new ant.ReleaseTest(),
+		new ant.SetupTest()
 	]);
 
 	ANSI.stripIfUnavailable = false;

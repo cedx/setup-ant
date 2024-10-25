@@ -1,4 +1,4 @@
-package setup_ant;
+package ant;
 
 import sys.FileSystem;
 using Lambda;

@@ -1,4 +1,4 @@
-package setup_ant;
+package ant;
 
 /** Tests the features of the `Release` class. **/
 @:asserts final class ReleaseTest {
@@ -13,8 +13,8 @@ package setup_ant;
 	public function new() {}
 
 	/** Tests the `exists` property. **/
-	@:variant(setup_ant.ReleaseTest.existingRelease, true)
-	@:variant(setup_ant.ReleaseTest.nonExistentRelease, false)
+	@:variant(ant.ReleaseTest.existingRelease, true)
+	@:variant(ant.ReleaseTest.nonExistentRelease, false)
 	public function exists(input: Release, output: Bool)
 		return assert(input.exists == output);
 
@@ -25,14 +25,14 @@ package setup_ant;
 	}
 
 	/** Tests the `url` property. **/
-	@:variant(setup_ant.ReleaseTest.existingRelease, "apache-ant-1.10.14-bin.zip")
-	@:variant(setup_ant.ReleaseTest.nonExistentRelease, "apache-ant-666.6.6-bin.zip")
+	@:variant(ant.ReleaseTest.existingRelease, "apache-ant-1.10.14-bin.zip")
+	@:variant(ant.ReleaseTest.nonExistentRelease, "apache-ant-666.6.6-bin.zip")
 	public function url(input: Release, output: String)
 		return assert(input.url == 'https://dlcdn.apache.org/ant/binaries/$output');
 
 	/** Tests the `find()` method. **/
-	@:variant("*", Some(setup_ant.Release.latest.version))
-	@:variant("1.x", Some(setup_ant.Release.latest.version))
+	@:variant("*", Some(ant.Release.latest.version))
+	@:variant("1.x", Some(ant.Release.latest.version))
 	@:variant("=1.9.16", Some("1.9.16"))
 	@:variant(">=1.0.0 <1.10.0", Some("1.9.16"))
 	@:variant("666.6.6", None)

@@ -1,4 +1,4 @@
-package setup_ant;
+package ant;
 
 #if macro
 import haxe.macro.Compiler;

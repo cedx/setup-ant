@@ -1,7 +1,6 @@
 /** Packages the project. **/
 function main() {
-	final file = "bin/setup_ant.js";
 	for (script in ["Clean", "Build", "Version"]) Sys.command('lix $script');
-	Sys.command('npx esbuild --allow-overwrite --bundle --legal-comments=none --log-level=warning --minify --outfile=$file --platform=node $file');
-	Sys.command('git update-index --chmod=+x $file');
+	Sys.command("npx rollup --config=etc/rollup.js");
+	Sys.command("git update-index --chmod=+x bin/setup_ant.js");
 }

@@ -7,5 +7,9 @@ const terser = require("@rollup/plugin-terser");
 module.exports = {
 	input: "bin/setup_ant.js",
 	output: {file: "bin/setup_ant.js", format: "cjs"},
-	plugins: [resolve(), commonjs(), terser()]
+	plugins: [
+		resolve(),
+		commonjs({sourceMap: false}),
+		terser({compress: true, format: {comments: false}, mangle: true})
+	]
 };

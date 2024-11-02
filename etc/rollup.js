@@ -4,8 +4,11 @@ import terser from "@rollup/plugin-terser";
 
 /** @type {import("rollup").RollupOptions} */
 export default {
-	input: "bin/setup_ant.js",
-	output: {file: "bin/setup_ant.js", format: "cjs"},
+	input: "lib/cli.js",
+	output: {
+		banner: "#!/usr/bin/env node",
+		file: "bin/setup_ant.js"
+	},
 	plugins: [
 		resolve(),
 		commonjs({sourceMap: false}),

@@ -1,4 +1,0 @@
---js bin/setup_ant.js
---macro ant.Macro.shebang("node")
---main ant.Program
-share/build.hxml

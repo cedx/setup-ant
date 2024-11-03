@@ -3,7 +3,7 @@ import {Release} from "./release.js";
 /**
  * Manages the download and installation of Apache Ant.
  */
-export declare class Setup {
+export class Setup {
 
 	/**
 	 * The release to download and install.

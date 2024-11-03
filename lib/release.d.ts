@@ -1,7 +1,7 @@
 /**
  * Represents a GitHub release.
  */
-export declare class Release {
+export class Release {
 
 	/**
 	 * The base URL of the releases.

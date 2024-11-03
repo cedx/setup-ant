@@ -14,7 +14,7 @@
 		"url": "https://belin.io"
 	},
 	"bin": {
-		"setup_ant": "bin/setup_ant.js"
+		"setup_ant": "bin/setup_ant.cjs"
 	},
 	"dependencies": {
 		"@actions/core": "^1.11.1",

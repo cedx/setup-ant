@@ -16,17 +16,17 @@ export declare class Release {
 	/**
 	 * The latest release.
 	 */
-	static get latest(): Release|null;
+	static readonly latest: Release|null;
 
 	/**
 	 * Value indicating whether this release exists.
 	 */
-	get exists(): boolean;
+	readonly exists: boolean;
 
 	/**
 	 * The download URL.
 	 */
-	get url(): URL;
+	readonly url: URL;
 
 	/**
 	 * The version number.

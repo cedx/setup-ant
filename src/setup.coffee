@@ -18,7 +18,9 @@ export class Setup
 	# Returns the path to the extracted directory.
 	download: (options = {}) ->
 		directory = await extractZip await downloadTool @release.url.href
+		console.log "download:directory", directory
 		antHome = join directory, await @_findSubfolder directory
+		console.log "download:antHome", antHome
 		await @_fetchOptionalTasks antHome if options.optionalTasks
 		antHome
 
@@ -26,6 +28,7 @@ export class Setup
 	# Returns the path to the install directory.
 	install: (options = {}) ->
 		antHome = find("ant", @release.version) ? await cacheDir (await @download options), "ant", @release.version
+		console.log "install:antHome", antHome
 		addPath join antHome, "bin"
 		exportVariable "ANT_HOME", antHome
 		antHome

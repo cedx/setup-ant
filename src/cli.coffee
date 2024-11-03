@@ -3,8 +3,7 @@ import process from "node:process"
 import {Release} from "./release.js"
 import {Setup} from "./setup.js"
 
-# Application entry point.
-main = ->
+try
 	process.title = "Setup Ant"
 
 	version = getInput "version"
@@ -16,6 +15,5 @@ main = ->
 	path = await new Setup(release).install {optionalTasks}
 	info "Apache Ant #{release.version} successfully #{installed} in \"#{path}\"."
 
-# Start the application.
-main().catch (error) ->
+catch error
 	setFailed if error instanceof Error then error else String error

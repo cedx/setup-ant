@@ -28,7 +28,7 @@ export class Setup
 	# Installs Apache Ant, after downloading it if required.
 	# Returns the path to the installation directory.
 	install: (options = {}) ->
-		antHome = if directory = find("ant", @release.version) then directory else await cacheDir (await @download options), "ant", @release.version
+		antHome = if path = find("ant", @release.version) then path else await cacheDir (await @download options), "ant", @release.version
 		addPath join antHome, "bin"
 		exportVariable "ANT_HOME", antHome
 		antHome

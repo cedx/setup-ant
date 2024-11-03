@@ -42,14 +42,14 @@ export declare class Release {
 	/**
 	 * Finds a release that matches the specified version constraint.
 	 * @param constraint The version constraint.
-	 * @returns The release corresponding to the specified constraint.
+	 * @returns The release corresponding to the specified constraint, or `null` if not found.
 	 */
 	static find(constraint: string): Release|null;
 
 	/**
 	 * Gets the release corresponding to the specified version.
 	 * @param version The version number of a release.
-	 * @returns The release corresponding to the specified version.
+	 * @returns The release corresponding to the specified version, or `null` if not found.
 	 */
 	static get(version: string): Release|null;
 }

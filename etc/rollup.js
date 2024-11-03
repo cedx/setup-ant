@@ -8,8 +8,7 @@ export default {
 	input: "lib/cli.js",
 	output: {
 		banner: "#!/usr/bin/env node",
-		file: "bin/setup_ant.cjs",
-		format: "commonjs"
+		file: "bin/setup_ant.js"
 	},
 	plugins: [
 		resolve(),

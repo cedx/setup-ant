@@ -19,7 +19,7 @@ task "dist", "Packages the project.", ->
 	invoke "build"
 	invoke "version"
 	npx "rollup", "--config=etc/rollup.js"
-	run "git", "update-index", "--chmod=+x", "bin/setup_ant.cjs"
+	run "git", "update-index", "--chmod=+x", "bin/setup_ant.js"
 
 task "lint", "Performs the static analysis of source code.", ->
 	npx "coffeelint", "--file=etc/coffeelint.json", "Cakefile", "src", "test"

@@ -4,16 +4,6 @@
 export class Release {
 
 	/**
-	 * The base URL of the releases.
-	 */
-	static baseUrl: URL;
-
-	/**
-	 * The list of all releases.
-	 */
-	static data: Array<Release>;
-
-	/**
 	 * The latest release.
 	 */
 	static readonly latest: Release|null;

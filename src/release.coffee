@@ -10,6 +10,12 @@ export class Release
 	# The list of all releases.
 	@data = data.map (release) -> new Release release.version
 
+	# Creates a new release.
+	constructor: (version) ->
+
+		# The version number.
+		@version = version
+
 	# The latest release.
 	Object.defineProperty @, "latest",
 		get: -> @data.at(0) or null
@@ -21,12 +27,6 @@ export class Release
 	# The download URL.
 	Object.defineProperty @prototype, "url",
 		get: -> new URL "apache-ant-#{@version}-bin.zip", Release.baseUrl
-
-	# Creates a new release.
-	constructor: (version) ->
-
-		# The version number.
-		@version = version
 
 	# Finds a release that matches the specified version constraint.
 	@find: (constraint) -> (@data.find (release) -> semver.satisfies release.version, constraint) or null

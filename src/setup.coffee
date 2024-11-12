@@ -5,9 +5,6 @@ import {readdir} from "node:fs/promises"
 import {join} from "node:path"
 import {promisify} from "node:util"
 
-# Spawns a new process using the specified command.
-run = promisify execFile
-
 # Manages the download and installation of Apache Ant.
 export class Setup
 
@@ -35,6 +32,7 @@ export class Setup
 
 	# Fetches the external libraries required by Ant optional tasks.
 	_fetchOptionalTasks: (antHome) ->
+		run = promisify execFile
 		run "java", ["-jar", "lib/ant-launcher.jar", "-buildfile", "fetch.xml", "-noinput", "-silent", "-Ddest=system"],
 			cwd: antHome
 			env: {ANT_HOME: antHome}

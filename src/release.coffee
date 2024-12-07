@@ -21,11 +21,11 @@ export class Release
 		get: -> @data.at(0) or null
 
 	# Value indicating whether this release exists.
-	Object.defineProperty @prototype, "exists",
+	Object.defineProperty @::, "exists",
 		get: -> Release.data.some (release) => release.version is @version
 
 	# The download URL.
-	Object.defineProperty @prototype, "url",
+	Object.defineProperty @::, "url",
 		get: -> new URL "apache-ant-#{@version}-bin.zip", Release.baseUrl
 
 	# Finds a release that matches the specified version constraint.

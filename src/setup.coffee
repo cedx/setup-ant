@@ -35,7 +35,7 @@ export class Setup
 
 	# Fetches the external libraries required by Ant optional tasks.
 	_fetchOptionalTasks: (antHome) ->
-		run "java", ["-jar", "lib/ant-launcher.jar", "-buildfile", "fetch.xml", "-noinput", "-silent", "-Ddest=system"],
+		await run "java", ["-jar", "lib/ant-launcher.jar", "-buildfile", "fetch.xml", "-noinput", "-silent", "-Ddest=system"],
 			cwd: antHome
 			env: {ANT_HOME: antHome}
 

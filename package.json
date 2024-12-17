@@ -7,7 +7,7 @@
 	"private": true,
 	"repository": "cedx/setup-ant",
 	"type": "module",
-	"version": "4.0.0",
+	"version": "4.1.0",
 	"author": {
 		"email": "cedric@belin.io",
 		"name": "Cédric Belin",

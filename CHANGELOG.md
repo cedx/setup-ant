@@ -1,7 +1,7 @@
 # Changelog
 
 ## Version [4.1.0](https://github.com/cedx/setup-ant/compare/v4.0.0...v4.1.0)
-- Added the [Ant](https://ant.apache.org) archives to the supported releases.
+- Added the [Ant archives](https://archive.apache.org/dist/ant/binaries) to the supported releases.
 
 ## Version [4.0.0](https://github.com/cedx/setup-ant/compare/v3.1.1...v4.0.0)
 - Ported the source code to [CoffeeScript](https://coffeescript.org).

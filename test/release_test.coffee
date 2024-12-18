@@ -4,6 +4,7 @@ import {Release} from "@cedx/setup-ant"
 
 # Tests the features of the `Release` class.
 describe "Release", ->
+	archivedRelease = new Release "1.7.1", true
 	existingRelease = new Release "1.10.15"
 	nonExistingRelease = new Release "666.6.6"
 
@@ -16,8 +17,9 @@ describe "Release", ->
 
 	describe "url", ->
 		it "should return the URL of the Ant archive", ->
-			equal existingRelease.url.href, "https://dlcdn.apache.org/ant/binaries/apache-ant-1.10.15-bin.zip"
-			equal nonExistingRelease.url.href, "https://dlcdn.apache.org/ant/binaries/apache-ant-666.6.6-bin.zip"
+			equal archivedRelease.url.href, "https://archive.apache.org/dist/ant/binaries/apache-ant-1.10.15-bin.zip"
+			equal existingRelease.url.href, "https://downloads.apache.org/ant/binaries/apache-ant-1.10.15-bin.zip"
+			equal nonExistingRelease.url.href, "https://downloads.apache.org/ant/binaries/apache-ant-666.6.6-bin.zip"
 
 	describe "find()", ->
 		it "should return `null` if no release matches the version constraint", ->

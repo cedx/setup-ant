@@ -4,14 +4,14 @@ import data from "./data.js"
 # Represents a GitHub release.
 export class Release
 
-	# The base URL of the releases.
-	@baseUrl = new URL "https://dlcdn.apache.org/ant/binaries/"
-
 	# The list of all releases.
-	@data = data.map (release) -> new Release release.version
+	@data = data.map (release) -> new Release release.version, release.archived
 
 	# Creates a new release.
-	constructor: (version) ->
+	constructor: (version, archived = no) ->
+
+		# Value indicating whether this release is archived.
+		@archived = archived
 
 		# The version number.
 		@version = version

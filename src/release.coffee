@@ -23,7 +23,9 @@ export class Release
 	Object.defineProperty @::, "exists", get: -> Release.data.some (release) => release.version is @version
 
 	# The download URL.
-	Object.defineProperty @::, "url", get: -> new URL "apache-ant-#{@version}-bin.zip", Release.baseUrl
+	Object.defineProperty @::, "url", get: ->
+		baseUrl = if @archived then "https://archive.apache.org/dist/ant/binaries/" else "https://downloads.apache.org/ant/binaries/"
+		new URL "apache-ant-#{@version}-bin.zip", baseUrl
 
 	# Finds a release that matches the specified version constraint.
 	@find: (constraint) -> (@data.find (release) -> semver.satisfies release.version, constraint) or null

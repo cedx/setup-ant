@@ -20,6 +20,6 @@ describe "Setup", ->
 
 	describe "install()", ->
 		it "should add the Ant directory to the PATH environment variable", ->
-			path = await new Setup(Release.latest).install optionalTasks: no
+			path = await new Setup(Release.get "1.7.1").install optionalTasks: no
 			equal env.ANT_HOME, path
 			ok env.PATH.includes path

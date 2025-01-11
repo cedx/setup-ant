@@ -52,7 +52,10 @@
 		"test",
 		"workflow"
 	],
+	"publishConfig": {
+		"access": "public"
+	},
 	"scripts": {
-		"test": "cake test"
+		"test": "gulp test"
 	}
 }

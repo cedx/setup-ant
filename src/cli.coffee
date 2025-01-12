@@ -17,4 +17,4 @@ main = ->
 	info "Apache Ant #{release.version} successfully #{installed} in \"#{path}\"."
 
 # Start the application.
-main().catch error -> setFailed if error instanceof Error then error else String error
+main().catch (error) -> setFailed if error instanceof Error then error else String error

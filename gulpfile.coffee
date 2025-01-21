@@ -22,7 +22,7 @@ export dist = ->
 		"--log-level=warning",
 		"--minify",
 		"--outfile=bin/setup_ant.cjs",
-		" --platform=node",
+		"--platform=node",
 		"lib/cli.js"
 	await run "git", "update-index", "--chmod=+x", "bin/setup_ant.cjs"
 

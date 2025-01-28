@@ -7,7 +7,7 @@
 	"private": true,
 	"repository": "cedx/setup-ant",
 	"type": "module",
-	"version": "4.1.0",
+	"version": "4.2.0",
 	"author": {
 		"email": "cedric@belin.io",
 		"name": "Cédric Belin",
@@ -35,7 +35,7 @@
 		"node": ">=20.0.0"
 	},
 	"exports": {
-		"types": "./src/index.d.ts",
+		"types": "./lib/index.d.ts",
 		"default": "./lib/index.js"
 	},
 	"files": [
@@ -52,9 +52,6 @@
 		"test",
 		"workflow"
 	],
-	"publishConfig": {
-		"access": "public"
-	},
 	"scripts": {
 		"test": "gulp test"
 	}

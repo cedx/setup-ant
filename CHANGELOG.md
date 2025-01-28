@@ -1,5 +1,8 @@
 # Changelog
 
+## Version [4.2.0](https://github.com/cedx/setup-ant/compare/v4.1.0...v4.2.0)
+- Ported the source code to [TypeScript](https://www.typescriptlang.org).
+
 ## Version [4.1.0](https://github.com/cedx/setup-ant/compare/v4.0.0...v4.1.0)
 - Added the [Ant archives](https://archive.apache.org/dist/ant/binaries) to the supported releases.
 

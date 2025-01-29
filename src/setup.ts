@@ -25,7 +25,7 @@ export class Setup {
 	 * Creates a new setup.
 	 * @param release The release to download and install.
 	 */
-	constructor(release: Release){
+	constructor(release: Release) {
 		this.release = release;
 	}
 

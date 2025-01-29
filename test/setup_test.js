@@ -9,12 +9,13 @@ import {Release, Setup} from "@cedx/setup-ant";
  * Tests the features of the {@link Setup} class.
  */
 describe("Setup", () => {
-	env.RUNNER_TEMP ||= resolve("var/tmp");
-	env.RUNNER_TOOL_CACHE ||= resolve("var/cache");
+	const latestRelease = /** @type {Release} */ (Release.latest);
+	env.RUNNER_TEMP ??= resolve("var/tmp");
+	env.RUNNER_TOOL_CACHE ??= resolve("var/cache");
 
 	describe("download()", () => {
 		it("should properly download and extract Apache Ant", async () => {
-			const path = await new Setup(Release.latest).download({optionalTasks: true});
+			const path = await new Setup(latestRelease).download({optionalTasks: true});
 			await doesNotReject(access(join(path, "bin", platform == "win32" ? "ant.cmd" : "ant")));
 
 			const jars = (await readdir(join(path, "lib"))).filter(file => file.endsWith(".jar"));
@@ -24,7 +25,7 @@ describe("Setup", () => {
 
 	describe("install()", () => {
 		it("should add the Ant directory to the PATH environment variable", async () => {
-			const path = await new Setup(Release.latest).install({optionalTasks: false});
+			const path = await new Setup(latestRelease).install({optionalTasks: false});
 			equal(env.ANT_HOME, path);
 			ok(env.PATH?.includes(path));
 		});

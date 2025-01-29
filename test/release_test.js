@@ -16,7 +16,7 @@ describe("Release", () => {
 	});
 
 	describe("latest", () => {
-		it("should exist", () => ok(Release.latest.exists));
+		it("should exist", () => ok(Release.latest?.exists));
 	});
 
 	describe("url", () => {

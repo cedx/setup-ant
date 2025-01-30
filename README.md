@@ -5,6 +5,7 @@ Set up your [GitHub Actions](https://docs.github.com/en/actions) workflow with a
 
 ## Documentation
 - [User guide](https://github.com/cedx/setup-ant/wiki)
+- [API reference](https://cedx.github.io/setup-ant)
 - [Examples](https://github.com/cedx/setup-ant/tree/main/example)
 
 ## Development

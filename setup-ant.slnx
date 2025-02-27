@@ -1,6 +1,0 @@
-<Solution>
-	<Project Path="setup-ant.esproj">
-		<Build />
-		<Deploy />
-	</Project>
-</Solution>

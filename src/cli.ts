@@ -1,5 +1,5 @@
 import {getBooleanInput, getInput, info, setFailed} from "@actions/core";
-import process from "node:process"
+import process from "node:process";
 import {Release} from "./release.js";
 import {Setup} from "./setup.js";
 

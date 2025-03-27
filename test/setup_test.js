@@ -1,9 +1,9 @@
+import {Release, Setup} from "@cedx/setup-ant";
 import {doesNotReject, equal, ok} from "node:assert/strict";
 import {access, readdir} from "node:fs/promises";
 import {join, resolve} from "node:path";
 import {env, platform} from "node:process";
 import {describe, it} from "node:test";
-import {Release, Setup} from "@cedx/setup-ant";
 
 /**
  * Tests the features of the {@link Setup} class.

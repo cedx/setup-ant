@@ -29,10 +29,10 @@ export async function dist() {
 		"--legal-comments=none",
 		"--log-level=warning",
 		"--minify",
-		"--outfile=bin/setup_ant.cjs",
+		"--outfile=bin/SetupAnt.cjs",
 		"--platform=node",
 		"lib/Program.js");
-	await run("git", "update-index", "--chmod=+x", "bin/setup_ant.cjs");
+	await run("git", "update-index", "--chmod=+x", "bin/SetupAnt.cjs");
 }
 
 /** Performs the static analysis of source code. */

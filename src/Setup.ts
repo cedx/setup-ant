@@ -4,7 +4,7 @@ import {execFile} from "node:child_process";
 import {readdir} from "node:fs/promises";
 import {join} from "node:path";
 import {promisify} from "node:util";
-import type {Release} from "./release.js";
+import type {Release} from "./Release.js";
 
 /**
  * Spawns a new process using the specified command.

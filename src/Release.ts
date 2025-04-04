@@ -1,5 +1,5 @@
 import semver from "semver";
-import data from "./data.json" with {type: "json"};
+import data from "./ReleaseData.json" with {type: "json"};
 
 /**
  * Represents a GitHub release.

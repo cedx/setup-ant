@@ -62,7 +62,7 @@ export class Setup {
 	 */
 	async #fetchOptionalTasks(antHome: string): Promise<void> {
 		const args = ["-jar", "lib/ant-launcher.jar", "-buildfile", "fetch.xml", "-noinput", "-silent", "-Ddest=system"];
-		await run("java", args, {cwd: antHome, env: {ANT_HOME: antHome}});
+		await run(`java ${args.join(" ")}`, {cwd: antHome, env: {ANT_HOME: antHome}});
 	}
 
 	/**

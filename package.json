@@ -1,4 +1,5 @@
 {
+	"author": "Cédric Belin <cedx@outlook.com>",
 	"bugs": "https://github.com/cedx/setup-ant/issues",
 	"description": "Set up your GitHub Actions workflow with a specific version of Apache Ant.",
 	"homepage": "https://github.com/cedx/setup-ant",
@@ -8,11 +9,6 @@
 	"repository": "cedx/setup-ant",
 	"type": "module",
 	"version": "4.2.0",
-	"author": {
-		"email": "cedx@outlook.com",
-		"name": "Cédric Belin",
-		"url": "https://belin.io"
-	},
 	"dependencies": {
 		"@actions/core": "^1.11.1",
 		"@actions/tool-cache": "^2.0.2",

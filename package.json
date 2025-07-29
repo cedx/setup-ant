@@ -44,8 +44,5 @@
 		"java",
 		"test",
 		"workflow"
-	],
-	"scripts": {
-		"test": "gulp test"
-	}
+	]
 }

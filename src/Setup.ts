@@ -74,9 +74,9 @@ export class Setup {
 	async #findSubfolder(directory: string): Promise<string> {
 		const folders = (await readdir(directory, {withFileTypes: true})).filter(entity => entity.isDirectory());
 		switch (folders.length) {
-			case 0: throw Error(`No subfolder found in: ${directory}.`);
+			case 0: throw new Error(`No subfolder found in: ${directory}.`);
 			case 1: return folders[0].name;
-			default: throw Error(`Multiple subfolders found in: ${directory}.`);
+			default: throw new Error(`Multiple subfolders found in: ${directory}.`);
 		}
 	}
 }

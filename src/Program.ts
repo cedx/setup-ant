@@ -13,7 +13,7 @@ async function main(): Promise<void> {
 
 	const version = getInput("version");
 	const release = Release.find(!version || version == "latest" ? "*" : version);
-	if (!release) throw Error("No release matching the version constraint.");
+	if (!release) throw new Error("No release matching the version constraint.");
 
 	const optionalTasks = getBooleanInput("optional-tasks");
 	const installed = optionalTasks ? "installed with optional tasks" : "installed";

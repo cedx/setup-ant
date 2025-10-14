@@ -29,4 +29,5 @@ jobs:
       - uses: cedx/setup-ant@main
         with:
           optional-tasks: true
+          version: =1.10.14
       - run: ant -version

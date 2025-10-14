@@ -20,10 +20,10 @@ runs:
   using: composite
   steps:
     - name: Set GitHub path
-      run: Add-Content $Env:GITHUB_PATH $Env:GITHUB_ACTION_PATH
+      run: Add-Content $Env:GITHUB_PATH ${{github.action_path}}
       shell: pwsh
-      env:
-        GITHUB_ACTION_PATH: ${{github.action_path}}
+      # env:
+      #   GITHUB_ACTION_PATH: ${{github.action_path}}
     - name: Set up Ant
       run: start.ps1
       shell: pwsh

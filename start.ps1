@@ -1,7 +1,3 @@
-Set-StrictMode -Version Latest
-$ErrorActionPreference = "Stop"
-$PSNativeCommandUseErrorActionPreference = $true
-
 echo "args"
 echo $args
 echo "env:SETUP_ANT_OPTIONAL_TASKS"

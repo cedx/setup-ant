@@ -25,13 +25,7 @@ runs:
     #   env:
     #     GITHUB_ACTION_PATH: ${{github.action_path}}
     - name: Set up Ant
-      run: |
-        Get-Location
-        Write-Output OK1
-        Get-ChildItem -Force
-        Write-Output OK2
-        pwsh --version
-        ${{github.action_path}}/start.ps1 -OptionalTasks ${{inputs.optional-tasks}} -Version ${{inputs.version}}
+      run: (Join-Path ${{github.action_path}} start.ps1) -OptionalTasks ${{inputs.optional-tasks}} -Version ${{inputs.version}}
       shell: pwsh
       env:
         SETUP_ANT_OPTIONAL_TASKS: ${{inputs.optional-tasks}}

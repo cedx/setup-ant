@@ -26,7 +26,7 @@ jobs:
         with:
           distribution: temurin
           java-version: 21
-      - uses: cedx/setup-ant@main
+      - uses: cedx/setup-ant@powershell
         with:
           optional-tasks: true
           version: =1.10.14

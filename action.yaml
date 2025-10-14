@@ -23,7 +23,7 @@ runs:
       run: |
         ls
         pwsh ./start.ps1
-      # shell: pwsh
+      shell: pwsh
       env:
         SETUP_ANT_OPTIONAL_TASKS: ${{ inputs.optional-tasks }}
         SETUP_ANT_VERSION: ${{ inputs.version }}

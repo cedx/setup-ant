@@ -21,9 +21,10 @@ runs:
   steps:
     - name: Set up Ant
       run: |
-        ls
+        Get-ChildItem -Force
+        pwsh --version
         pwsh ./start.ps1
       shell: pwsh
       env:
-        SETUP_ANT_OPTIONAL_TASKS: ${{ inputs.optional-tasks }}
-        SETUP_ANT_VERSION: ${{ inputs.version }}
+        SETUP_ANT_OPTIONAL_TASKS: ${{inputs.optional-tasks}}
+        SETUP_ANT_VERSION: ${{inputs.version}}

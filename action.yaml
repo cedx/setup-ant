@@ -19,7 +19,7 @@ inputs:
 runs:
   using: composite
   steps:
-    name: bin/SetupAnt.ps1
+    name: TODO
     run: ./bin/SetupAnt.ps1 ${{ inputs.optional-tasks }} ${{ inputs.version }}
     shell: pwsh
     env:

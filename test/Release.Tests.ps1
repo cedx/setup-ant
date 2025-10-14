@@ -1,46 +1,50 @@
-import {Release} from "@cedx/setup-ant";
-import {equal, ok} from "node:assert/strict";
-import {describe, it} from "node:test";
+using module ../src/Release.psm1
 
-/**
- * Tests the features of the {@link Release} class.
- */
-describe("Release", () => {
-	const archivedRelease = new Release("1.7.1", {archived: true});
-	const existingRelease = new Release("1.10.15");
-	const nonExistingRelease = new Release("666.6.6");
+<#
+.SYNOPSIS
+	Tests the features of the {@link Release} class.
+#>
+Describe "Release" {
+	BeforeAll {
+		$existingRelease = [Release] "1.10.15"
+		$nonExistingRelease = [Release] "666.6.6"
+	}
 
-	describe("exists", () => {
-		it("should return `false` if the release does not exist", () => ok(!nonExistingRelease.exists));
-		it("should return `true` if the release exists", () => ok(existingRelease.exists));
-	});
+	Describe "Exists()" {
+		It "should return `$true if the release exists" { $existingRelease.Exists() | Should -BeTrue }
+		It "should return `$false if the release does not exist" { $nonExistingRelease.Exists() | Should -BeFalse }
+	}
 
-	describe("latest", () => {
-		it("should exist", () => ok(Release.latest?.exists));
-	});
+	Describe "Url()" {
+		It "should return the URL of the Ant archive" {
+			$existingRelease.Url() | Should -BeExactly "https://archive.apache.org/dist/ant/binaries/apache-ant-1.10.15-bin.zip"
+			$nonExistingRelease.Url() | Should -BeExactly "https://archive.apache.org/dist/ant/binaries/apache-ant-666.6.6-bin.zip"
+		}
+	}
 
-	describe("url", () => {
-		it("should return the URL of the Ant archive", () => {
-			equal(archivedRelease.url.href, "https://archive.apache.org/dist/ant/binaries/apache-ant-1.7.1-bin.zip");
-			equal(existingRelease.url.href, "https://downloads.apache.org/ant/binaries/apache-ant-1.10.15-bin.zip");
-			equal(nonExistingRelease.url.href, "https://downloads.apache.org/ant/binaries/apache-ant-666.6.6-bin.zip");
-		});
-	});
+	Describe "Find()" {
+		It "should return `$null if no release matches the version constraint" {
+			[Release]::Find("666.6.6") | Should -Be $null
+		}
 
-	describe("find()", () => {
-		it("should return `null` if no release matches the version constraint", () =>
-			ok(!Release.find("666.6.6")));
+		It "should return the release corresponding to the version constraint if it exists" {
+			$latestRelease = [Release]::Latest();
+			[Release]::Find("*") | Should -Be $latestRelease
+			[Release]::Find("1") | Should -Be $latestRelease
+			[Release]::Find("1.11") | Should -Be $null
+			[Release]::Find(">1.10.15")?.Version | Should -Be $null
+			[Release]::Find("=1.8.2")?.Version | Should -Be "1.8.2"
+			[Release]::Find("<1.10")?.Version | Should -Be "1.9.16"
+			[Release]::Find("<=1.10")?.Version | Should -Be "1.10.0"
+		}
+	}
 
-		it("should return the release corresponding to the version constraint if it exists", () => {
-			equal(Release.find("*"), Release.latest);
-			equal(Release.find("1.x"), Release.latest);
-			equal(Release.find("=1.9.16")?.version, "1.9.16");
-			equal(Release.find(">=1.0.0 <1.10.0")?.version, "1.9.16");
-		});
-	});
+	Describe "Get()" {
+		It "should return `$null if no release matches to the version number" { [Release]::Get("666.6.6") | Should -Be $null }
+		It "should return the release corresponding to the version number if it exists" { [Release]::Get("1.8.2")?.Version | Should -Be "1.8.2" }
+	}
 
-	describe("get()", () => {
-		it("should return `null` if no release matches to the version number", () => ok(!Release.get("666.6.6")));
-		it("should return the release corresponding to the version number if it exists", () => equal(Release.get("1.10.15")?.version, "1.10.15"));
-	});
-});
+	Describe "Latest()" {
+		It "should exist" { [Release]::Latest() | Should -Not -Be $null }
+	}
+}

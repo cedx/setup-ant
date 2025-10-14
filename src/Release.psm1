@@ -1,84 +1,106 @@
-import semver from "semver";
-import data from "./Release.Data.json" with {type: "json"};
+<#
+.SYNOPSIS
+	Represents an Ant release.
+#>
+class Release {
 
-/**
- * Represents a GitHub release.
- */
-export class Release {
+	<#
+	.SYNOPSIS
+		The list of all releases.
+	#>
+	hidden static [Release[]] $Data
 
-	/**
-	 * The latest release.
-	 */
-	static get latest(): Release|null {
-		return this.#data.at(0) ?? null;
+	<#
+	.SYNOPSIS
+		The version number.
+	#>
+	[ValidateNotNull()] [semver] $Version
+
+	<#
+	.SYNOPSIS
+		Creates a new release.
+	.PARAMETER $version
+		The version number.
+	#>
+	Release([string] $version) {
+		$this.Version = $version
 	}
 
-	/**
-	 * The list of all releases.
-	 */
-	static readonly #data: Release[] = data.map(release => new this(release.version, {archived: release.archived}));
-
-	/**
-	 * Value indicating whether this release is archived.
-	 */
-	archived: boolean;
-
-	/**
-	 * The version number.
-	 */
-	version: string;
-
-	/**
-	 * Creates a new release.
-	 * @param version The version number.
-	 * @param options An object providing values to initialize this instance.
-	 */
-	constructor(version: string, options: ReleaseOptions = {}) {
-		this.version = version;
-		this.archived = options.archived ?? false;
+	<#
+	.SYNOPSIS
+		Initializes the class.
+	#>
+	static Release() {
+		[Release]::Data = (Import-PowerShellDataFile "$PSScriptRoot/Data.psd1").Releases.ForEach{ [Release] $_ }
 	}
 
-	/**
-	 * Value indicating whether this release exists.
-	 */
-	get exists(): boolean {
-		return Release.#data.some(release => release.version == this.version);
+	<#
+	.SYNOPSIS
+		Gets a value indicating whether this release exists.
+	.OUTPUTS
+		`$true` if this release exists, otherwise `$false`.
+	#>
+	[bool] Exists() {
+		return $null -ne [Release]::Get($this.Version)
 	}
 
-	/**
-	 * The download URL.
-	 */
-	get url(): URL {
-		const baseUrl = this.archived ? "https://archive.apache.org/dist/ant/binaries/" : "https://downloads.apache.org/ant/binaries/";
-		return new URL(`apache-ant-${this.version}-bin.zip`, baseUrl);
+	<#
+	.SYNOPSIS
+		Gets the download URL.
+	.OUTPUTS
+		The download URL.
+	#>
+	[uri] Url() {
+		return [uri] "https://archive.apache.org/dist/ant/binaries/apache-ant-$($this.Version)-bin.zip"
 	}
 
-	/**
-	 * Finds a release that matches the specified version constraint.
-	 * @param constraint The version constraint.
-	 * @returns The release corresponding to the specified constraint, or `null` if not found.
-	 */
-	static find(constraint: string): Release|null {
-		return this.#data.find(release => semver.satisfies(release.version, constraint)) ?? null;
+	<#
+	.SYNOPSIS
+		Finds a release that matches the specified version constraint.
+	.PARAMETER $constraint
+		The version constraint.
+	.OUTPUTS
+		The release corresponding to the specified constraint, or `$null` if not found.
+	#>
+	static [Release] Find([string] $constraint) {
+		$operator, $semver = switch -Regex ($constraint) {
+			"^\*$" { "=", [Release]::Latest().Version }
+			"^([^\d]+)\d" { $Matches[1], [semver] ($constraint -replace "^([^\d]+)", "") }
+			"^\d" { ">=", [semver] $constraint }
+			default { throw [FormatException] "The version constraint is invalid." }
+		}
+
+		$predicate = switch ($operator) {
+			">=" { { $_.Version -ge $semver } }
+			">" { { $_.Version -gt $semver } }
+			"<=" { { $_.Version -le $semver } }
+			"<" { { $_.Version -lt $semver } }
+			"=" { { $_.Version -eq $semver } }
+			default { throw [FormatException] "The version constraint is invalid." }
+		}
+
+		return [Release]::Data.Where($predicate)[0]
 	}
 
-	/**
-	 * Gets the release corresponding to the specified version.
-	 * @param version The version number of a release.
-	 * @returns The release corresponding to the specified version, or `null` if not found.
-	 */
-	static get(version: string): Release|null {
-		return this.#data.find(release => release.version == version) ?? null;
+	<#
+	.SYNOPSIS
+		Gets the release corresponding to the specified version.
+	.PARAMETER $version
+		The version number of a release.
+	.OUTPUTS
+		The release corresponding to the specified version, or `$null` if not found.
+	#>
+	static [Release] Get([string] $version) {
+		return [Release]::Data.Where({ $_.Version -eq $version }, "First")[0]
+	}
+
+	<#
+	.SYNOPSIS
+		Gets the latest release.
+	.OUTPUTS
+		The latest release, or `$null` if not found.
+	#>
+	static [Release] Latest() {
+		return [Release]::Data[0]
 	}
 }
-
-/**
- * Defines the options of a {@link Release} instance.
- */
-export type ReleaseOptions = Partial<{
-
-	/**
-	 * Value indicating whether this release is archived.
-	 */
-	archived: boolean;
-}>;

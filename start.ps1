@@ -6,10 +6,11 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 $PSNativeCommandUseErrorActionPreference = $true
 
-echo "- args"
-echo $args
-echo "- env:SETUP_ANT_OPTIONAL_TASKS"
-echo $ENV:SETUP_ANT_OPTIONAL_TASKS
-echo "- env:SETUP_ANT_VERSION"
-echo $ENV:SETUP_ANT_VERSION
-echo - "OK !"
+$release = [Release]::Find($Env:SETUP_ANT_VERSION)
+if (-not $release) { throw "No release matching the version constraint." }
+
+$optionalTasks = $Env:SETUP_ANT_OPTIONAL_TASKS -eq "true"
+$installed = $optionalTasks ? "installed with optional tasks" : "installed"
+
+$path = [Setup]::new($release).Install($optionalTasks)
+"Apache Ant $($release.Version) successfully $installed in ""$path""."

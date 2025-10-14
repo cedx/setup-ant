@@ -1,82 +1,93 @@
-import {addPath, exportVariable} from "@actions/core";
-import {cacheDir, downloadTool, extractZip, find} from "@actions/tool-cache";
-import {execFile} from "node:child_process";
-import {readdir} from "node:fs/promises";
-import {join} from "node:path";
-import {promisify} from "node:util";
-import type {Release} from "./Release.js";
+using namespace System.IO
+using module ./Release.psm1
 
-/**
- * Spawns a new process using the specified command.
- */
-const run = promisify(execFile);
+<#
+.SYNOPSIS
+	Manages the download and installation of Apache Ant.
+#>
+class Setup {
 
-/**
- * Manages the download and installation of Apache Ant.
- */
-export class Setup {
+	<#
+	.SYNOPSIS
+		The release to download and install.
+	#>
+	hidden [Release] $Release
 
-	/**
-	 * The release to download and install.
-	 */
-	readonly release: Release;
-
-	/**
-	 * Creates a new setup.
-	 * @param release The release to download and install.
-	 */
-	constructor(release: Release) {
-		this.release = release;
+	<#
+	.SYNOPSIS
+		Creates a new setup.
+	.PARAMETER $release
+		The release to download and install.
+	#>
+	Setup([Release] $release) {
+		$this.Release = $release
 	}
 
-	/**
-	 * Downloads and extracts the ZIP archive of Apache Ant.
-	 * @param options Value indicating whether to fetch the Ant optional tasks.
-	 * @returns The path to the extracted directory.
-	 */
-	async download(options: {optionalTasks?: boolean} = {}): Promise<string> {
-		const directory = await extractZip(await downloadTool(this.release.url.href));
-		const antHome = join(directory, await this.#findSubfolder(directory));
-		if (options.optionalTasks) await this.#fetchOptionalTasks(antHome);
-		return antHome;
+	<#
+	.SYNOPSIS
+		Downloads and extracts the ZIP archive of Apache Ant.
+	.PARAMETER $optionalTasks
+		Value indicating whether to fetch the Ant optional tasks.
+	.OUTPUTS
+		The path to the extracted directory.
+	#>
+	[string] Download([bool] $optionalTasks) {
+		$file = New-TemporaryFile
+		Invoke-WebRequest $this.Release.Url() -OutFile $file
+
+		$directory = Join-Path ([Path]::GetTempPath()) (New-Guid)
+		Expand-Archive $file $directory -Force
+
+		$antHome = Join-Path $directory $this.FindSubfolder($directory)
+		if ($optionalTasks) { $this.FetchOptionalTasks($antHome) }
+		return $antHome
 	}
 
-	/**
-	 * Installs Apache Ant, after downloading it if required.
-	 * @param options Value indicating whether to fetch the Ant optional tasks.
-	 * @returns The path to the installation directory.
-	 */
-	async install(options: {optionalTasks?: boolean} = {}): Promise<string> {
-		let antHome = find("ant", this.release.version);
-		if (!antHome) antHome = await cacheDir(await this.download(options), "ant", this.release.version);
+	<#
+	.SYNOPSIS
+		Installs Apache Ant, after downloading it if required.
+	.PARAMETER $optionalTasks
+		Value indicating whether to fetch the Ant optional tasks.
+	.OUTPUTS
+		The path to the installation directory.
+	#>
+	[string] Install([bool] $optionalTasks) {
+		$antHome = $this.Download($optionalTasks)
+		$Env:ANT_HOME = $antHome
+		Add-Content $Env:GITHUB_ENV "ANT_HOME=$antHome"
 
-		addPath(join(antHome, "bin"));
-		exportVariable("ANT_HOME", antHome);
-		return antHome;
+		$binFolder = Join-Path $antHome "bin"
+		$Env:PATH += "$([Path]::PathSeparator)$binFolder"
+		Add-Content $Env:GITHUB_PATH $binFolder
+
+		return $antHome
 	}
 
-	/**
-	 * Fetches the external libraries required by Ant optional tasks.
-	 * @param antHome The path to the Ant directory.
-	 * @returns Resolves when the optional tasks have been fetched.
-	 */
-	async #fetchOptionalTasks(antHome: string): Promise<void> {
-		const args = ["-jar", "lib/ant-launcher.jar", "-buildfile", "fetch.xml", "-noinput", "-silent", "-Ddest=system"];
-		await run("java", args, {cwd: antHome, env: {ANT_HOME: antHome}});
+	<#
+	.SYNOPSIS
+		Fetches the external libraries required by Ant optional tasks.
+	.PARAMETER $antHome
+		The path to the Ant directory.
+	#>
+	hidden [void] FetchOptionalTasks([string] $antHome) {
+		$options = "-jar lib/ant-launcher.jar -buildfile fetch.xml -noinput -silent -Ddest=system"
+		Start-Process java $options -Environment @{ ANT_HOME = $antHome } -NoNewWindow -Wait -WorkingDirectory $antHome
 	}
 
-	/**
-	 * Determines the name of the single subfolder in the specified directory.
-	 * @param directory The directory path.
-	 * @returns The name of the single subfolder in the specified directory.
-	 * @throws `Error` when the subfolder could not be determined.
-	 */
-	async #findSubfolder(directory: string): Promise<string> {
-		const folders = (await readdir(directory, {withFileTypes: true})).filter(entity => entity.isDirectory());
-		switch (folders.length) {
-			case 0: throw new Error(`No subfolder found in: ${directory}.`);
-			case 1: return folders[0].name;
-			default: throw new Error(`Multiple subfolders found in: ${directory}.`);
+	<#
+	.SYNOPSIS
+		Determines the name of the single subfolder in the specified directory.
+	.PARAMETER $directory
+		The directory path.
+	.OUTPUTS
+		The name of the single subfolder in the specified directory.
+	#>
+	hidden [string] FindSubfolder([string] $directory) {
+		$folders = Get-ChildItem $directory -Directory
+		return $discard = switch ($folders.Length) {
+			0 { throw "No subfolder found in: $directory." }
+			1 { $folders[0].Name } # TODO BaseName ?
+			default { throw "Multiple subfolders found in: $directory." }
 		}
 	}
 }

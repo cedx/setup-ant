@@ -6,6 +6,7 @@ using module ../src/Release.psm1
 #>
 Describe "Release" {
 	BeforeAll {
+		$latestRelease = [Release]::Latest();
 		$existingRelease = [Release] "1.10.15"
 		$nonExistingRelease = [Release] "666.6.6"
 	}
@@ -28,7 +29,6 @@ Describe "Release" {
 		}
 
 		It "should return the release corresponding to the version constraint if it exists" {
-			$latestRelease = [Release]::Latest();
 			[Release]::Find("*") | Should -Be $latestRelease
 			[Release]::Find("1") | Should -Be $latestRelease
 			[Release]::Find("1.11") | Should -Be $null
@@ -36,6 +36,11 @@ Describe "Release" {
 			[Release]::Find("=1.8.2")?.Version | Should -Be "1.8.2"
 			[Release]::Find("<1.10")?.Version | Should -Be "1.9.16"
 			[Release]::Find("<=1.10")?.Version | Should -Be "1.10.0"
+		}
+
+		It "should throw if the version constraint is invalid" {
+			{ [Release]::Find("abc") } | Should -Throw
+			{ [Release]::Find("?1.10") } | Should -Throw
 		}
 	}
 
@@ -45,6 +50,6 @@ Describe "Release" {
 	}
 
 	Describe "Latest()" {
-		It "should exist" { [Release]::Latest() | Should -Not -Be $null }
+		It "should exist" { $latestRelease | Should -Not -Be $null }
 	}
 }

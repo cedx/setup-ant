@@ -1,33 +1,32 @@
-import {Release, Setup} from "@cedx/setup-ant";
-import {doesNotReject, equal, ok} from "node:assert/strict";
-import {access, readdir} from "node:fs/promises";
-import {join, resolve} from "node:path";
-import {env, platform} from "node:process";
-import {describe, it} from "node:test";
+using module ../src/Release.psm1
+using module ../src/Setup.psm1
 
-/**
- * Tests the features of the {@link Setup} class.
- */
-describe("Setup", () => {
-	const latestRelease = /** @type {Release} */ (Release.latest);
-	env.RUNNER_TEMP ??= resolve("var/tmp");
-	env.RUNNER_TOOL_CACHE ??= resolve("var/cache");
+<#
+.SYNOPSIS
+	Tests the features of the {@link Setup} class.
+#>
+Describe "Setup" {
+	BeforeAll {
+		$latestRelease = [Release]::Latest()
+		$Env:GITHUB_ENV = "var/GitHub-Env.txt"
+		$Env:GITHUB_Path = "var/GitHub-Path.txt"
+	}
 
-	describe("download()", () => {
-		it("should properly download and extract Apache Ant", async () => {
-			const path = await new Setup(latestRelease).download({optionalTasks: true});
-			await doesNotReject(access(join(path, "bin", platform == "win32" ? "ant.cmd" : "ant")));
+	Describe "Download()" {
+		It "should properly download and extract Apache Ant" {
+			$path = [Setup]::new($latestRelease).Download($true)
+			Join-Path $path "bin/$($IsWindows ? "ant.cmd" : "ant")" | Should -Exist
 
-			const jars = (await readdir(join(path, "lib"))).filter(file => file.endsWith(".jar"));
-			equal(jars.filter(file => file.startsWith("ivy-")).length, 1);
-		});
-	});
+			$jars = Get-ChildItem (Join-Path $path "lib/*.jar")
+			$jars.Where{ $_.BaseName.StartsWith("ivy-") } | Should -HaveCount 1
+		}
+	}
 
-	describe("install()", () => {
-		it("should add the Ant directory to the PATH environment variable", async () => {
-			const path = await new Setup(latestRelease).install({optionalTasks: false});
-			equal(env.ANT_HOME, path);
-			ok(env.PATH?.includes(path));
-		});
-	});
-});
+	Describe "Install()" {
+		It "should add the Ant directory to the PATH environment variable" {
+			$path = [Setup]::new($latestRelease).Install($false)
+			$Env:ANT_HOME | Should -Be $path
+			$Env:PATH | Should -BeLikeExactly "*$path*"
+		}
+	}
+}

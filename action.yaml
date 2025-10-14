@@ -1,6 +1,6 @@
+author: Cédric Belin
 name: Setup Ant
 description: Set up your GitHub Actions workflow with a specific version of Apache Ant.
-author: Cédric Belin
 
 branding:
   color: red
@@ -21,8 +21,10 @@ runs:
   steps:
     - name: Set up Ant
       run: |
+        Get-Location
+        Write-Output OK1
         Get-ChildItem -Force
-        Write-Output OK
+        Write-Output OK2
         pwsh --version
         pwsh start.ps1
       shell: pwsh

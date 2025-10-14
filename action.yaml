@@ -1,6 +1,6 @@
+author: Cédric Belin
 name: Setup Ant
 description: Set up your GitHub Actions workflow with a specific version of Apache Ant.
-author: Cédric Belin
 
 branding:
   color: red
@@ -17,5 +17,12 @@ inputs:
     required: false
 
 runs:
-  using: node20
-  main: bin/SetupAnt.cjs
+  using: composite
+  steps:
+    - run: Add-Content $Env:GITHUB_PATH ${{github.action_path}}
+      shell: pwsh
+    - run: start.ps1
+      shell: pwsh
+      env:
+        SETUP_ANT_OPTIONAL_TASKS: ${{inputs.optional-tasks}}
+        SETUP_ANT_VERSION: ${{inputs.version}}

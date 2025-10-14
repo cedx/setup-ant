@@ -10,14 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Fetch sources
-        uses: actions/checkout@v4
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          cache: npm
-          node-version: latest
+        uses: actions/checkout@v5
       - name: Install dependencies
-        run: npm ci
+        run: Install-PSResource Pester -TrustRepository
       - name: Run tests
         run: ./invoke.ps1 Test
   run:
@@ -27,11 +22,13 @@ jobs:
       matrix:
         platform: [macos-latest, ubuntu-latest, windows-latest]
     steps:
-      - uses: actions/setup-java@v4
+      - name: Set up Java
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: 21
-      - uses: cedx/setup-ant@main
+          java-version: 25
+      - name: Set up Ant
+        uses: cedx/setup-ant@powershell
         with:
           optional-tasks: true
       - run: ant -version

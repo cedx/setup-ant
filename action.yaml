@@ -31,8 +31,8 @@ runs:
         Get-ChildItem -Force
         Write-Output OK2
         pwsh --version
-        ./start.ps1
-      shell: pwsh ${{inputs.optional-tasks}} ${{inputs.version}}
+        ./start.ps1 ${{inputs.optional-tasks}} ${{inputs.version}}
+      shell: pwsh
       env:
         SETUP_ANT_OPTIONAL_TASKS: ${{inputs.optional-tasks}}
         SETUP_ANT_VERSION: ${{inputs.version}}

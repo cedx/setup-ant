@@ -19,13 +19,13 @@ inputs:
 runs:
   using: composite
   steps:
-    # - name: Set GitHub path
-    #   run: Add-Content $Env:GITHUB_PATH $Env:GITHUB_ACTION_PATH
-    #   shell: pwsh
-    #   env:
-    #     GITHUB_ACTION_PATH: ${{github.action_path}}
+    - name: Set GitHub path
+      run: Add-Content $Env:GITHUB_PATH $Env:GITHUB_ACTION_PATH
+      shell: pwsh
+      env:
+        GITHUB_ACTION_PATH: ${{github.action_path}}
     - name: Set up Ant
-      run: (Join-Path ${{github.action_path}} start.ps1) -OptionalTasks ${{inputs.optional-tasks}} -Version ${{inputs.version}}
+      run: start.ps1
       shell: pwsh
       env:
         SETUP_ANT_OPTIONAL_TASKS: ${{inputs.optional-tasks}}

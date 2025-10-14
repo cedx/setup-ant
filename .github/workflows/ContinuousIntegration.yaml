@@ -6,28 +6,30 @@ defaults:
     shell: pwsh
 
 jobs:
-  # test:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Fetch sources
-  #       uses: actions/checkout@v5
-  #     - name: Install dependencies
-  #       run: Install-PSResource Pester -TrustRepository
-  #     - name: Run tests
-  #       run: ./invoke.ps1 Test
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch sources
+        uses: actions/checkout@v5
+      - name: Install dependencies
+        run: Install-PSResource Pester -TrustRepository
+      - name: Run tests
+        run: ./invoke.ps1 Test
   run:
-    # needs: test
+    needs: test
     runs-on: ${{matrix.platform}}
     strategy:
       matrix:
-        platform: [windows-latest] # [macos-latest, ubuntu-latest, windows-latest]
+        platform: [macos-latest, ubuntu-latest, windows-latest]
     steps:
-      - uses: actions/setup-java@v5
+      - name: Set up Java
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: 21
-      - uses: cedx/setup-ant@powershell
-        # with:
-        #   optional-tasks: true
-        #   version: =1.10.14
+          java-version: 25
+      - name: Set up Ant
+        uses: cedx/setup-ant@powershell
+        with:
+          optional-tasks: true
+          version: =1.10.14
       - run: ant -version

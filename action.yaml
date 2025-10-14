@@ -20,8 +20,10 @@ runs:
   using: composite
   steps:
     - name: Set up Ant
-      run: ./start.ps1
-      shell: pwsh
+      run: |
+        ls
+        pwsh ./start.ps1
+      # shell: pwsh
       env:
         SETUP_ANT_OPTIONAL_TASKS: ${{ inputs.optional-tasks }}
         SETUP_ANT_VERSION: ${{ inputs.version }}

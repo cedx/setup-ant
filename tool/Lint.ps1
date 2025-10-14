@@ -2,4 +2,4 @@
 Import-Module PSScriptAnalyzer
 Invoke-ScriptAnalyzer $PSScriptRoot -Recurse
 Invoke-ScriptAnalyzer src -Recurse
-Invoke-ScriptAnalyzer test -ExcludeRule PSUseDeclaredVarsMoreThanAssignments -Recurse
+Invoke-ScriptAnalyzer test -Recurse

@@ -1,3 +1,4 @@
+using namespace System.Diagnostics.CodeAnalysis
 using module ../src/Release.psm1
 
 <#
@@ -6,8 +7,11 @@ using module ../src/Release.psm1
 #>
 Describe "Release" {
 	BeforeAll {
+		[SuppressMessage("PSUseDeclaredVarsMoreThanAssignments", "")]
 		$latestRelease = [Release]::Latest();
+		[SuppressMessage("PSUseDeclaredVarsMoreThanAssignments", "")]
 		$existingRelease = [Release] "1.10.15"
+		[SuppressMessage("PSUseDeclaredVarsMoreThanAssignments", "")]
 		$nonExistingRelease = [Release] "666.6.6"
 	}
 

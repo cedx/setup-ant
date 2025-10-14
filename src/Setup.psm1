@@ -1,3 +1,4 @@
+using namespace System.Diagnostics.CodeAnalysis
 using namespace System.IO
 using module ./Release.psm1
 
@@ -82,6 +83,7 @@ class Setup {
 	.OUTPUTS
 		The name of the single subfolder in the specified directory.
 	#>
+	[SuppressMessage("PSUseDeclaredVarsMoreThanAssignments", "")]
 	hidden [string] FindSubfolder([string] $directory) {
 		$folders = Get-ChildItem $directory -Directory
 		return $discard = switch ($folders.Length) {

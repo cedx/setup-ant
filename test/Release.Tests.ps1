@@ -29,6 +29,7 @@ Describe "Release" {
 		}
 
 		It "should return the release corresponding to the version constraint if it exists" {
+			[Release]::Find("latest") | Should -Be $latestRelease
 			[Release]::Find("*") | Should -Be $latestRelease
 			[Release]::Find("1") | Should -Be $latestRelease
 			[Release]::Find("1.11") | Should -Be $null

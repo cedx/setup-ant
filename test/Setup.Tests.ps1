@@ -16,7 +16,6 @@ Describe "Setup" {
 		It "should properly download and extract Apache Ant" {
 			$path = [Setup]::new($latestRelease).Download($true)
 			Join-Path $path "bin/$($IsWindows ? "ant.cmd" : "ant")" | Should -Exist
-
 			$jars = Get-ChildItem (Join-Path $path "lib/*.jar")
 			$jars.Where{ $_.BaseName.StartsWith("ivy-") } | Should -HaveCount 1
 		}
@@ -25,7 +24,7 @@ Describe "Setup" {
 	Describe "Install()" {
 		It "should add the Ant directory to the PATH environment variable" {
 			$path = [Setup]::new($latestRelease).Install($false)
-			$Env:ANT_HOME | Should -Be $path
+			$Env:ANT_HOME | Should -BeExactly $path
 			$Env:PATH | Should -BeLikeExactly "*$path*"
 		}
 	}

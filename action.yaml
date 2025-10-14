@@ -19,9 +19,9 @@ inputs:
 runs:
   using: composite
   steps:
-    name: TODO
-    run: ./bin/SetupAnt.ps1 ${{ inputs.optional-tasks }} ${{ inputs.version }}
-    shell: pwsh
-    env:
-      SETUP_ANT_OPTIONAL_TASKS: ${{ inputs.optional-tasks }}
-      SETUP_ANT_VERSION: ${{ inputs.version }}
+    - name: Set up Ant
+      run: ./bin/SetupAnt.ps1 ${{ inputs.optional-tasks }} ${{ inputs.version }}
+      shell: pwsh
+      env:
+        SETUP_ANT_OPTIONAL_TASKS: ${{ inputs.optional-tasks }}
+        SETUP_ANT_VERSION: ${{ inputs.version }}

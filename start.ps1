@@ -1,6 +1,6 @@
 #!/usr/bin/env pwsh
-# using module ./src/Release.psm1
-# using module ./src/Setup.psm1
+using module ./src/Release.psm1
+using module ./src/Setup.psm1
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"

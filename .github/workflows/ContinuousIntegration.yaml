@@ -31,5 +31,4 @@ jobs:
         uses: cedx/setup-ant@powershell
         with:
           optional-tasks: true
-          version: 123.0.5
       - run: ant -version

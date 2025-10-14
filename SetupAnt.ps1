@@ -1,7 +1,3 @@
-#!/usr/bin/env pwsh
-using module ../src/Setup.psm1
-# param ([switch] $optionalTasks)
-
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 $PSNativeCommandUseErrorActionPreference = $true

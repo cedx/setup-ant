@@ -9,7 +9,7 @@ Describe "Setup" {
 	BeforeAll {
 		$latestRelease = [Release]::Latest()
 		$Env:GITHUB_ENV = "var/GitHub-Env.txt"
-		$Env:GITHUB_Path = "var/GitHub-Path.txt"
+		$Env:GITHUB_PATH = "var/GitHub-Path.txt"
 	}
 
 	Describe "Download()" {

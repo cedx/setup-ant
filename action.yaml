@@ -19,6 +19,11 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Set GitHub action path
+      run: Add-Content $Env:GITHUB_PATH $Env:GITHUB_ACTION_PATH
+      shell: pwsh
+      env:
+        GITHUB_ACTION_PATH: ${{github.action_path}}
     - name: Set up Ant
       run: |
         Get-Location

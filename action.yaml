@@ -22,8 +22,9 @@ runs:
     - name: Set up Ant
       run: |
         Get-ChildItem -Force
+        Write-Output OK
         pwsh --version
-        pwsh ./start.ps1
+        pwsh start.ps1
       shell: pwsh
       env:
         SETUP_ANT_OPTIONAL_TASKS: ${{inputs.optional-tasks}}

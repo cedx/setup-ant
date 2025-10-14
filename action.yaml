@@ -19,11 +19,11 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Set GitHub path
-      run: Add-Content $Env:GITHUB_PATH $Env:GITHUB_ACTION_PATH
-      shell: pwsh
-      env:
-        GITHUB_ACTION_PATH: ${{github.action_path}}
+    # - name: Set GitHub path
+    #   run: Add-Content $Env:GITHUB_PATH $Env:GITHUB_ACTION_PATH
+    #   shell: pwsh
+    #   env:
+    #     GITHUB_ACTION_PATH: ${{github.action_path}}
     - name: Set up Ant
       run: |
         Get-Location
@@ -31,7 +31,7 @@ runs:
         Get-ChildItem -Force
         Write-Output OK2
         pwsh --version
-        "$($Env:GITHUB_PATH)/start.ps1" ${{inputs.optional-tasks}} ${{inputs.version}}
+        ${{github.action_path}}/start.ps1 -OptionalTasks ${{inputs.optional-tasks}} -Version ${{inputs.version}}
       shell: pwsh
       env:
         SETUP_ANT_OPTIONAL_TASKS: ${{inputs.optional-tasks}}

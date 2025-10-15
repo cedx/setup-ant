@@ -51,7 +51,7 @@ class Release {
 		The download URL.
 	#>
 	[uri] Url() {
-		return [uri] "https://archive.apache.org/dist/ant/binaries/apache-ant-$($this.Version)-bin.zip"
+		return "https://archive.apache.org/dist/ant/binaries/apache-ant-$($this.Version)-bin.zip"
 	}
 
 	<#

@@ -10,6 +10,7 @@ Describe "Setup" {
 	BeforeAll {
 		[SuppressMessage("PSUseDeclaredVarsMoreThanAssignments", "")]
 		$latestRelease = [Release]::Latest()
+
 		$Env:GITHUB_ENV = "var/GitHub-Env.txt"
 		$Env:GITHUB_PATH = "var/GitHub-Path.txt"
 	}

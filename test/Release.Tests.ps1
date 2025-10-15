@@ -9,8 +9,10 @@ Describe "Release" {
 	BeforeAll {
 		[SuppressMessage("PSUseDeclaredVarsMoreThanAssignments", "")]
 		$existingRelease = [Release] "1.10.15"
+
 		[SuppressMessage("PSUseDeclaredVarsMoreThanAssignments", "")]
-		$latestRelease = [Release]::Latest();
+		$latestRelease = [Release]::Latest()
+
 		[SuppressMessage("PSUseDeclaredVarsMoreThanAssignments", "")]
 		$nonExistingRelease = [Release] "666.6.6"
 	}

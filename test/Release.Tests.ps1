@@ -36,7 +36,7 @@ Describe "Release" {
 			[Release]::Find("latest") | Should -Be $latestRelease
 			[Release]::Find("*") | Should -Be $latestRelease
 			[Release]::Find("1") | Should -Be $latestRelease
-			[Release]::Find("1.11") | Should -Be $null
+			[Release]::Find("2") | Should -Be $null
 			[Release]::Find(">1.10.15")?.Version | Should -Be $null
 			[Release]::Find("=1.8.2")?.Version | Should -Be "1.8.2"
 			[Release]::Find("<1.10")?.Version | Should -Be "1.9.16"

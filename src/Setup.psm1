@@ -12,7 +12,7 @@ class Setup {
 	.SYNOPSIS
 		The release to download and install.
 	#>
-	hidden [Release] $Release
+	hidden [ValidateNotNull()] [Release] $Release
 
 	<#
 	.SYNOPSIS
@@ -54,13 +54,13 @@ class Setup {
 	#>
 	[string] Install([bool] $optionalTasks) {
 		$antHome = $this.Download($optionalTasks)
-		$Env:ANT_HOME = $antHome
-		Add-Content $Env:GITHUB_ENV "ANT_HOME=$antHome"
 
 		$binFolder = Join-Path $antHome "bin"
 		$Env:PATH += "$([Path]::PathSeparator)$binFolder"
 		Add-Content $Env:GITHUB_PATH $binFolder
 
+		$Env:ANT_HOME = $antHome
+		Add-Content $Env:GITHUB_ENV "ANT_HOME=$Env:ANT_HOME"
 		return $antHome
 	}
 

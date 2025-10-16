@@ -14,7 +14,7 @@ class Release {
 	.SYNOPSIS
 		The version number.
 	#>
-	[ValidateNotNull()] [semver] $Version
+	[semver] $Version
 
 	<#
 	.SYNOPSIS

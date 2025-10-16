@@ -17,7 +17,7 @@ Describe "Setup" {
 		}
 	}
 
-	Describe "Download()" {
+	Describe "Download" {
 		It "should properly download and extract Apache Ant" {
 			$path = [Setup]::new($latestRelease).Download($true)
 			Join-Path $path "bin/$($IsWindows ? "ant.cmd" : "ant")" | Should -Exist
@@ -26,7 +26,7 @@ Describe "Setup" {
 		}
 	}
 
-	Describe "Install()" {
+	Describe "Install" {
 		It "should add the Ant directory to the PATH environment variable" {
 			$path = [Setup]::new($latestRelease).Install($false)
 			$Env:ANT_HOME | Should -BeExactly $path

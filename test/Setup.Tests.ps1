@@ -11,7 +11,7 @@ Describe "Setup" {
 		[SuppressMessage("PSUseDeclaredVarsMoreThanAssignments", "")]
 		$latestRelease = [Release]::Latest()
 
-		if ($Env:CI -ne "true") {
+		if (-not $Env:CI) {
 			$Env:GITHUB_ENV = "var/GitHub-Env.txt"
 			$Env:GITHUB_PATH = "var/GitHub-Path.txt"
 		}

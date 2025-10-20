@@ -27,6 +27,16 @@ class Setup {
 	<#
 	.SYNOPSIS
 		Downloads and extracts the ZIP archive of Apache Ant.
+	.OUTPUTS
+		The path to the extracted directory.
+	#>
+	[string] Download() {
+		return $this.Download($false)
+	}
+
+	<#
+	.SYNOPSIS
+		Downloads and extracts the ZIP archive of Apache Ant.
 	.PARAMETER OptionalTasks
 		Value indicating whether to fetch the Ant optional tasks.
 	.OUTPUTS
@@ -42,6 +52,16 @@ class Setup {
 		$antHome = Join-Path $directory $this.FindSubfolder($directory)
 		if ($OptionalTasks) { $this.FetchOptionalTasks($antHome) }
 		return $antHome
+	}
+
+	<#
+	.SYNOPSIS
+		Installs Apache Ant, after downloading it.
+	.OUTPUTS
+		The path to the installation directory.
+	#>
+	[string] Install() {
+		return $this.Install($false)
 	}
 
 	<#

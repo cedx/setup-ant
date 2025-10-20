@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-	Represents an Ant release.
+	Represents an Apache Ant release.
 #>
 class Release {
 
@@ -14,7 +14,7 @@ class Release {
 	.SYNOPSIS
 		The version number.
 	#>
-	[semver] $Version
+	[ValidateNotNull()] [semver] $Version
 
 	<#
 	.SYNOPSIS

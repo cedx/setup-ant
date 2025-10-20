@@ -36,7 +36,7 @@ Describe "Release" {
 
 	Context "Find" {
 		It "should return `$null if no release matches the version constraint" {
-			[Release]::Find("666.6.6") | Should -Be $null
+			[Release]::Find($nonExistingRelease.Version) | Should -Be $null
 		}
 
 		It "should return the release corresponding to the version constraint if it exists" {
@@ -57,7 +57,7 @@ Describe "Release" {
 
 	Context "Get" {
 		It "should return `$null if no release matches to the version number" {
-			[Release]::Get("666.6.6") | Should -Be $null
+			[Release]::Get($nonExistingRelease.Version) | Should -Be $null
 		}
 
 		It "should return the release corresponding to the version number if it exists" {

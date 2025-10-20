@@ -3,7 +3,7 @@ using module ../src/Release.psm1
 
 <#
 .SYNOPSIS
-	Tests the features of the `Release` class.
+	Tests the features of the `Release` module.
 #>
 Describe "Release" {
 	BeforeAll {

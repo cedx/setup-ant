@@ -19,11 +19,11 @@ class Release {
 	<#
 	.SYNOPSIS
 		Creates a new release.
-	.PARAMETER $version
+	.PARAMETER Version
 		The version number.
 	#>
-	Release([string] $version) {
-		$this.Version = $version
+	Release([string] $Version) {
+		$this.Version = $Version
 	}
 
 	<#
@@ -57,16 +57,16 @@ class Release {
 	<#
 	.SYNOPSIS
 		Finds a release that matches the specified version constraint.
-	.PARAMETER $constraint
+	.PARAMETER Constraint
 		The version constraint.
 	.OUTPUTS
 		The release corresponding to the specified constraint, or `$null` if not found.
 	#>
-	static [Release] Find([string] $constraint) {
-		$operator, $semver = switch -Regex ($constraint) {
+	static [Release] Find([string] $Constraint) {
+		$operator, $semver = switch -Regex ($Constraint) {
 			"^(\*|latest)$" { "=", [Release]::Latest().Version; break }
-			"^([^\d]+)\d" { $Matches[1], [semver] ($constraint -replace "^([^\d]+)", ""); break }
-			"^\d" { ">=", [semver] $constraint; break }
+			"^([^\d]+)\d" { $Matches[1], [semver] ($Constraint -replace "^([^\d]+)", ""); break }
+			"^\d" { ">=", [semver] $Constraint; break }
 			default { throw [FormatException] "The version constraint is invalid." }
 		}
 
@@ -85,13 +85,13 @@ class Release {
 	<#
 	.SYNOPSIS
 		Gets the release corresponding to the specified version.
-	.PARAMETER $version
+	.PARAMETER Version
 		The version number of a release.
 	.OUTPUTS
 		The release corresponding to the specified version, or `$null` if not found.
 	#>
-	static [Release] Get([string] $version) {
-		return [Release]::Data.Where({ $_.Version -eq $version }, "First")[0]
+	static [Release] Get([string] $Version) {
+		return [Release]::Data.Where({ $_.Version -eq $Version }, "First")[0]
 	}
 
 	<#

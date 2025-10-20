@@ -17,22 +17,22 @@ class Setup {
 	<#
 	.SYNOPSIS
 		Creates a new setup.
-	.PARAMETER $release
+	.PARAMETER Release
 		The release to download and install.
 	#>
-	Setup([Release] $release) {
-		$this.Release = $release
+	Setup([Release] $Release) {
+		$this.Release = $Release
 	}
 
 	<#
 	.SYNOPSIS
 		Downloads and extracts the ZIP archive of Apache Ant.
-	.PARAMETER $optionalTasks
+	.PARAMETER OptionalTasks
 		Value indicating whether to fetch the Ant optional tasks.
 	.OUTPUTS
 		The path to the extracted directory.
 	#>
-	[string] Download([bool] $optionalTasks) {
+	[string] Download([bool] $OptionalTasks) {
 		$file = New-TemporaryFile
 		Invoke-WebRequest $this.Release.Url() -OutFile $file
 
@@ -40,20 +40,20 @@ class Setup {
 		Expand-Archive $file $directory -Force
 
 		$antHome = Join-Path $directory $this.FindSubfolder($directory)
-		if ($optionalTasks) { $this.FetchOptionalTasks($antHome) }
+		if ($OptionalTasks) { $this.FetchOptionalTasks($antHome) }
 		return $antHome
 	}
 
 	<#
 	.SYNOPSIS
-		Installs Apache Ant, after downloading it if required.
-	.PARAMETER $optionalTasks
+		Installs Apache Ant, after downloading it.
+	.PARAMETER OptionalTasks
 		Value indicating whether to fetch the Ant optional tasks.
 	.OUTPUTS
 		The path to the installation directory.
 	#>
-	[string] Install([bool] $optionalTasks) {
-		$antHome = $this.Download($optionalTasks)
+	[string] Install([bool] $OptionalTasks) {
+		$antHome = $this.Download($OptionalTasks)
 
 		$binFolder = Join-Path $antHome "bin"
 		$Env:PATH += "$([Path]::PathSeparator)$binFolder"
@@ -67,29 +67,29 @@ class Setup {
 	<#
 	.SYNOPSIS
 		Fetches the external libraries required by Ant optional tasks.
-	.PARAMETER $antHome
+	.PARAMETER AntHome
 		The path to the Ant directory.
 	#>
-	hidden [void] FetchOptionalTasks([string] $antHome) {
+	hidden [void] FetchOptionalTasks([string] $AntHome) {
 		$options = "-jar lib/ant-launcher.jar -buildfile fetch.xml -noinput -silent -Ddest=system"
-		Start-Process java $options -Environment @{ ANT_HOME = $antHome } -NoNewWindow -Wait -WorkingDirectory $antHome
+		Start-Process java $options -Environment @{ ANT_HOME = $AntHome } -NoNewWindow -Wait -WorkingDirectory $AntHome
 	}
 
 	<#
 	.SYNOPSIS
 		Determines the name of the single subfolder in the specified directory.
-	.PARAMETER $directory
+	.PARAMETER Directory
 		The directory path.
 	.OUTPUTS
 		The name of the single subfolder in the specified directory.
 	#>
 	[SuppressMessage("PSUseDeclaredVarsMoreThanAssignments", "")]
-	hidden [string] FindSubfolder([string] $directory) {
-		$folders = Get-ChildItem $directory -Directory
+	hidden [string] FindSubfolder([string] $Directory) {
+		$folders = Get-ChildItem $Directory -Directory
 		return $discard = switch ($folders.Count) {
-			0 { throw "No subfolder found in: $directory." }
+			0 { throw "No subfolder found in: $Directory." }
 			1 { $folders[0].BaseName; break }
-			default { throw "Multiple subfolders found in: $directory." }
+			default { throw "Multiple subfolders found in: $Directory." }
 		}
 	}
 }

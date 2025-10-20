@@ -1,5 +1,8 @@
 # Changelog
 
+## Version [5.1.0](https://github.com/cedx/setup-ant/compare/v5.0.0...v5.1.0)
+- Added the `Find-Release`, `Get-Release`, `Install-Release`, `New-Release` and `Test-Release` cmdlets.
+
 ## Version [5.0.0](https://github.com/cedx/setup-ant/compare/v4.2.0...v5.0.0)
 - Ported the source code to [PowerShell](https://learn.microsoft.com/en-us/powershell).
 

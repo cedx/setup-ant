@@ -18,8 +18,13 @@ Describe "Release" {
 	}
 
 	Context "Exists" {
-		It "should return `$true if the release exists" { $existingRelease.Exists() | Should -BeTrue }
-		It "should return `$false if the release does not exist" { $nonExistingRelease.Exists() | Should -BeFalse }
+		It "should return `$true if the release exists" {
+			$existingRelease.Exists() | Should -BeTrue
+		}
+
+		It "should return `$false if the release does not exist" {
+			$nonExistingRelease.Exists() | Should -BeFalse
+		}
 	}
 
 	Context "Url" {
@@ -51,11 +56,18 @@ Describe "Release" {
 	}
 
 	Context "Get" {
-		It "should return `$null if no release matches to the version number" { [Release]::Get("666.6.6") | Should -Be $null }
-		It "should return the release corresponding to the version number if it exists" { [Release]::Get("1.8.2")?.Version | Should -Be "1.8.2" }
+		It "should return `$null if no release matches to the version number" {
+			[Release]::Get("666.6.6") | Should -Be $null
+		}
+
+		It "should return the release corresponding to the version number if it exists" {
+			[Release]::Get("1.8.2")?.Version | Should -Be "1.8.2"
+		}
 	}
 
 	Context "Latest" {
-		It "should exist" { $latestRelease | Should -Not -Be $null }
+		It "should exist" {
+			$latestRelease | Should -Not -Be $null
+		}
 	}
 }

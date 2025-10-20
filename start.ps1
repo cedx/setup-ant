@@ -5,6 +5,7 @@ using module ./src/Setup.psm1
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 $PSNativeCommandUseErrorActionPreference = $true
+if (-not (Test-Path Env:SETUP_ANT_VERSION)) { $Env:SETUP_ANT_VERSION = "latest" }
 
 $release = [Release]::Find($Env:SETUP_ANT_VERSION)
 if (-not $release) { throw "No release matching the version constraint." }

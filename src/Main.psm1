@@ -13,6 +13,7 @@ using module ./Setup.psm1
 	The release corresponding to the specified constraint, or `$null` if not found.
 #>
 function Find-Release {
+	[CmdletBinding()]
 	[OutputType([Release])]
 	param (
 		[Parameter(Mandatory, Position = 0, ValueFromPipeline)]
@@ -36,6 +37,7 @@ function Find-Release {
 	The release corresponding to the specified version, or `$null` if not found.
 #>
 function Get-Release {
+	[CmdletBinding()]
 	[OutputType([Release])]
 	param (
 		[Parameter(Mandatory, Position = 0, ValueFromPipeline)]
@@ -97,6 +99,7 @@ function Install-Release {
 	The newly created release.
 #>
 function New-Release {
+	[CmdletBinding()]
 	[OutputType([Release])]
 	[SuppressMessage("PSUseShouldProcessForStateChangingFunctions", "")]
 	param (

@@ -34,7 +34,7 @@ Describe "Main" {
 			(Find-AntRelease "<=1.10")?.Version | Should -Be "1.10.0"
 		}
 
-		It "should throw if the version constraint is invalid" -TestCases @(@{ Version = "abc" }, @{ Version = "?1.10" }) {
+		It "should throw if the version constraint is invalid" -TestCases @{ Version = "abc" }, @{ Version = "?1.10" } {
 			{ Find-AntRelease $version } | Should -Throw
 		}
 	}

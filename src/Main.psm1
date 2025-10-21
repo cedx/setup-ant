@@ -44,7 +44,7 @@ function Get-Release {
 	)
 
 	process {
-		$Version -in @("*", "Latest") ? [Release]::Latest() : [Release]::Get($Version)
+		$Version -in "*", "Latest" ? [Release]::Latest() : [Release]::Get($Version)
 	}
 }
 

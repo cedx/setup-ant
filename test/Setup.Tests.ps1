@@ -19,7 +19,7 @@ Describe "Setup" {
 		It "should properly download and extract Apache Ant" {
 			$path = [Setup]::new($latestRelease).Download($true)
 			Join-Path $path "bin/$($IsWindows ? "ant.cmd" : "ant")" | Should -Exist
-			$jars = Get-ChildItem (Join-Path $path "lib/*.jar")
+			$jars = Get-Item (Join-Path $path "lib/*.jar")
 			$jars.Where{ $_.BaseName.StartsWith("ivy-") } | Should -HaveCount 1
 		}
 	}

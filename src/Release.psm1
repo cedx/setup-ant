@@ -50,7 +50,7 @@ class Release {
 	.OUTPUTS
 		The download URL.
 	#>
-	[uri] Url() {
+	[uri] GetUrl() {
 		return "https://archive.apache.org/dist/ant/binaries/apache-ant-$($this.Version)-bin.zip"
 	}
 

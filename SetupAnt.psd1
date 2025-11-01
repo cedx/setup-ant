@@ -8,6 +8,7 @@
 	DefaultCommandPrefix = "Ant"
 	Description = "Set up your GitHub Actions workflow with a specific version of Apache Ant."
 	GUID = "30b52520-21cd-44c4-aa11-b1f0dc085686"
+	PowerShellVersion = "7.4"
 
 	AliasesToExport = @()
 	CmdletsToExport = @()

@@ -24,12 +24,6 @@ jobs:
         with:
           optional-tasks: true
           version: latest
-      - name: Cache dependencies
-        uses: actions/cache@v4
-        with:
-          path: lib
-          key: java-${{runner.os}}-ivy-${{hashFiles('ivy.xml')}}
-          restore-keys: java-${{runner.os}}-ivy-
       - name: Install dependencies
         run: ant install
       - name: Run tests

@@ -27,10 +27,10 @@ Describe "Release" {
 		}
 	}
 
-	Context "GetUrl" {
+	Context "Url" {
 		It "should return the URL of the Ant archive" {
-			$existingRelease.GetUrl() | Should -BeExactly "https://archive.apache.org/dist/ant/binaries/apache-ant-1.10.15-bin.zip"
-			$nonExistingRelease.GetUrl() | Should -BeExactly "https://archive.apache.org/dist/ant/binaries/apache-ant-666.6.6-bin.zip"
+			$existingRelease.Url() | Should -BeExactly "https://archive.apache.org/dist/ant/binaries/apache-ant-1.10.15-bin.zip"
+			$nonExistingRelease.Url() | Should -BeExactly "https://archive.apache.org/dist/ant/binaries/apache-ant-666.6.6-bin.zip"
 		}
 	}
 

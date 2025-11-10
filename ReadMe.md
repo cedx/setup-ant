@@ -1,5 +1,5 @@
 # Setup Ant
-![PowerShell](https://badgen.net/static/powershell/%3E%3D7.5/green) ![PSGallery](https://badgen.net/static/module/v5.1.0/blue) ![License](https://badgen.net/static/license/MIT/blue)
+![PowerShell](https://badgen.net/static/powershell/%3E%3D7.4/green) ![PSGallery](https://badgen.net/static/module/v5.1.0/blue) ![License](https://badgen.net/static/license/MIT/blue)
 
 Set up your [GitHub Actions](https://docs.github.com/en/actions) workflow with a specific version of [Apache Ant](https://ant.apache.org).
 

@@ -3,4 +3,4 @@ Import-Module PSScriptAnalyzer
 Invoke-ScriptAnalyzer $PSScriptRoot -Recurse
 Invoke-ScriptAnalyzer src -Recurse
 Invoke-ScriptAnalyzer test -Recurse
-Test-ModuleManifest "$PSScriptRoot/../SetupAnt.psd1" | Out-Null
+Test-ModuleManifest SetupAnt.psd1 | Out-Null

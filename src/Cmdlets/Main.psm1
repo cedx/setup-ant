@@ -10,7 +10,7 @@ using module ./Setup.psm1
 .INPUTS
 	A string that contains a version constraint.
 .OUTPUTS
-	The release corresponding to the specified constraint, or `$null` if not found.
+	The release corresponding to the specified constraint, or <see langword="null"/> if not found.
 #>
 function Find-Release {
 	[CmdletBinding()]
@@ -33,7 +33,7 @@ function Find-Release {
 .INPUTS
 	A string that contains a version number.
 .OUTPUTS
-	The release corresponding to the specified version, or `$null` if not found.
+	The release corresponding to the specified version, or <see langword="null"/> if not found.
 #>
 function Get-Release {
 	[CmdletBinding()]

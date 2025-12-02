@@ -33,12 +33,8 @@
 		<File Path="action.yaml" />
 		<File Path=".github/workflows/ContinuousIntegration.yaml" />
 	</Folder>
-	<Project Path="src/SetupAnt.esproj">
-		<Build />
-		<Deploy />
-	</Project>
-	<Project Path="test/SetupAnt.Tests.esproj">
-		<Build />
-		<Deploy />
+	<Project Path="src/SetupAnt.csproj" />
+	<Project Path="test/SetupAnt.Tests.csproj">
+		<Build Solution="Release|*" Project="false" />
 	</Project>
 </Solution>

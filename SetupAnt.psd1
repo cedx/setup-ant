@@ -2,7 +2,7 @@
 	DefaultCommandPrefix = "Ant"
 	ModuleVersion = "5.1.0"
 	PowerShellVersion = "7.4"
-	RootModule = "src/Main.psm1"
+	RootModule = "bin/Belin.SetupAnt.dll"
 
 	Author = "Cédric Belin <cedx@outlook.com>"
 	CompanyName = "Cedric-Belin.fr"
@@ -11,20 +11,15 @@
 	GUID = "30b52520-21cd-44c4-aa11-b1f0dc085686"
 
 	AliasesToExport = @()
-	CmdletsToExport = @()
+	FunctionsToExport = @()
 	VariablesToExport = @()
 
-	FunctionsToExport = @(
+	CmdletsToExport = @(
 		"Find-Release"
 		"Get-Release"
 		"Install-Release"
 		"New-Release"
 		"Test-Release"
-	)
-
-	NestedModules = @(
-		"src/Release.psm1"
-		"src/Setup.psm1"
 	)
 
 	PrivateData = @{

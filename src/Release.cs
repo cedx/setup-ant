@@ -15,6 +15,13 @@ public partial class Release(Version version): IEquatable<Release> {
 	public static Release Latest => data.First();
 
 	/// <summary>
+	/// Gets the regular expression used to check if a version number represents the latest release.
+	/// </summary>
+	/// <returns>The regular expression used to check if a version number represents the latest release.</returns>
+	[GeneratedRegex(@"^(\*|latest)$", RegexOptions.IgnoreCase)]
+	internal static partial Regex LatestReleasePattern();
+
+	/// <summary>
 	/// Value indicating whether this release exists.
 	/// </summary>
 	public bool Exists => data.Any(release => release == this);
@@ -47,7 +54,7 @@ public partial class Release(Version version): IEquatable<Release> {
 	/// <param name="object2">The second object.</param>
 	/// <returns><see langword="true"/> if <c>object1</c> equals <c>object2</c>, otherwise <see langword="false"/>.</returns>
 	public static bool operator ==(Release? object1, Release? object2) =>
-		object1 is null ? object2 is null : (ReferenceEquals(object1, object2) || object1.Equals(object2));
+		object1 is null ? object2 is null : ReferenceEquals(object1, object2) || object1.Equals(object2);
 
 	/// <summary>
 	/// Determines whether the two specified objects are not equal.
@@ -64,10 +71,10 @@ public partial class Release(Version version): IEquatable<Release> {
 	/// <returns>The release corresponding to the specified constraint, or <see langword="null"/> if not found.</returns>
 	/// <exception cref="FormatException">The version constraint is invalid.</exception>
 	public static Release? Find(string constraint) {
-		var match = Regex.Match(constraint, @"^([^\d]+)\d");
+		var operatorMatch = Regex.Match(constraint, @"^([^\d]+)\d");
 		var (op, version) = true switch {
-			true when Regex.IsMatch(constraint, @"^(\*|latest)$", RegexOptions.IgnoreCase) => ("=", Latest.Version.ToString()),
-			true when match.Success => (match.Groups[1].Value, Regex.Replace(constraint, @"^[^\d]+", "")),
+			true when LatestReleasePattern().IsMatch(constraint) => ("=", Latest.Version.ToString()),
+			true when operatorMatch.Success => (operatorMatch.Groups[1].Value, Regex.Replace(constraint, @"^[^\d]+", "")),
 			true when Regex.IsMatch(constraint, @"^\d") => (">=", constraint),
 			_ => throw new FormatException("The version constraint is invalid.")
 		};

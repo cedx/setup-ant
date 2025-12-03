@@ -30,6 +30,6 @@ public class InstallReleaseCommand: PSCmdlet {
 	/// </summary>
 	protected override void ProcessRecord() {
 		var release = ParameterSetName == "InputObject" ? InputObject : new Release(Version);
-		// TODO WriteObject(new Setup(release).Install(OptionalTasks));
+		WriteObject(new Setup(release).Install(OptionalTasks).GetAwaiter().GetResult());
 	}
 }

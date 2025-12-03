@@ -1,17 +1,12 @@
 #!/usr/bin/env pwsh
-using namespace Belin.SetupAnt
-Add-Type -Path "$PSScriptRoot/bin/Belin.SetupAnt.dll"
+Import-Module "$PSScriptRoot/SetupAnt.psd1"
 
 $ErrorActionPreference = "Stop"
 $PSNativeCommandUseErrorActionPreference = $true
 Set-StrictMode -Version Latest
 if (-not (Test-Path Env:SETUP_ANT_VERSION)) { $Env:SETUP_ANT_VERSION = "Latest" }
 
-$release = [Release]::Find($Env:SETUP_ANT_VERSION)
-if (-not $release) { throw "No release matching the version constraint." }
-
 $optionalTasks = $Env:SETUP_ANT_OPTIONAL_TASKS -eq "true"
-$path = [Setup]::new($release).Install($optionalTasks)
-
+$path = Install-Release $Env:SETUP_ANT_VERSION -OptionalTasks:$optionalTasks
 $installed = $optionalTasks ? "installed with optional tasks" : "installed"
 "Apache Ant $($release.Version) successfully $installed in ""$path""."

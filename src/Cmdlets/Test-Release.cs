@@ -8,7 +8,7 @@ namespace Belin.SetupAnt.Cmdlets;
 public class TestReleaseCommand: PSCmdlet {
 
 	/// <summary>
-	/// The version number of the release to be tested.
+	/// The release to be tested.
 	/// </summary>
 	[Parameter(Mandatory = true, ParameterSetName = "InputObject", ValueFromPipeline = true)]
 	public required Release InputObject { get; set; }

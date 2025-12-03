@@ -3,12 +3,18 @@ namespace Belin.SetupAnt.Cmdlets;
 /// <summary>
 /// Installs Apache Ant, after downloading it.
 /// </summary>
-[Cmdlet(VerbsLifecycle.Install, "Release")]
+[Cmdlet(VerbsLifecycle.Install, "Release", DefaultParameterSetName = "Constraint")]
 [OutputType(typeof(string))]
 public class InstallReleaseCommand: PSCmdlet {
 
 	/// <summary>
-	/// The instance of the release to be installed.
+	/// The version constraint of the release to be installed.
+	/// </summary>
+	[Parameter(Mandatory = true, ParameterSetName = "Constraint", Position = 0, ValueFromPipeline = true)]
+	public required string Constraint { get; set; }
+
+	/// <summary>
+	/// The release to be installed.
 	/// </summary>
 	[Parameter(Mandatory = true, ParameterSetName = "InputObject", ValueFromPipeline = true)]
 	public required Release InputObject { get; set; }
@@ -20,16 +26,14 @@ public class InstallReleaseCommand: PSCmdlet {
 	public SwitchParameter OptionalTasks { get; set; }
 
 	/// <summary>
-	/// The version number of the release to be installed.
-	/// </summary>
-	[Parameter(Mandatory = true, ParameterSetName = "Version", Position = 0, ValueFromPipeline = true)]
-	public required Version Version { get; set; }
-
-	/// <summary>
 	/// Performs execution of this command.
 	/// </summary>
 	protected override void ProcessRecord() {
-		var release = ParameterSetName == "InputObject" ? InputObject : new Release(Version);
-		WriteObject(new Setup(release).Install(OptionalTasks).GetAwaiter().GetResult());
+		var release = ParameterSetName == "InputObject" ? InputObject : Release.Find(Constraint);
+		if (release?.Exists ?? false) WriteObject(new Setup(release).Install(OptionalTasks).GetAwaiter().GetResult());
+		else {
+			var exception = new InvalidOperationException("No release matches the specified version constraint.");
+			WriteError(new ErrorRecord(exception, "ReleaseNotFound", ErrorCategory.ObjectNotFound, null));
+		}
 	}
 }

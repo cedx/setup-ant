@@ -1,8 +1,5 @@
 namespace Belin.SetupAnt.Cmdlets;
 
-using System.Data;
-using System.Text.RegularExpressions;
-
 /// <summary>
 /// Gets the release corresponding to the specified version.
 /// </summary>

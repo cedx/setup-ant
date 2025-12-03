@@ -60,11 +60,10 @@ public class Setup(Release release) {
 	/// <returns>Completes when the external libraries have been fetched.</returns>
 	/// <exception cref="ApplicationFailedException">An error occurred while fetching the external libraries.</exception>
 	private static async Task FetchOptionalTasks(string antHome) {
-		var startInfo = new ProcessStartInfo {
+		var startInfo = new ProcessStartInfo("java") {
 			Arguments = "-jar lib/ant-launcher.jar -buildfile fetch.xml -noinput -silent -Ddest=system",
 			CreateNoWindow = true,
 			EnvironmentVariables = { ["ANT_HOME"] = antHome },
-			FileName = "java",
 			WorkingDirectory = antHome
 		};
 

@@ -1,5 +1,10 @@
 namespace Belin.SetupAnt;
 
+using System.Diagnostics;
+using System.IO;
+using System.IO.Compression;
+using System.Threading;
+
 /// <summary>
 /// Manages the download and installation of Apache Ant.
 /// </summary>
@@ -10,17 +15,61 @@ public class Setup(Release release) {
 	/// Downloads and extracts the ZIP archive of Apache Ant.
 	/// </summary>
 	/// <param name="optionalTasks">Value indicating whether to fetch the Ant optional tasks.</param>
+	/// <param name="cancellationToken">The token to cancel the operation.</param>
 	/// <returns>The path to the extracted directory.</returns>
-	public string Download(bool optionalTasks = false) {
-		return "TODO";
+	public async Task<string> Download(bool optionalTasks = false, CancellationToken cancellationToken = default) {
+		using var httpClient = new HttpClient();
+		var version = GetType().Assembly.GetName().Version!;
+		httpClient.DefaultRequestHeaders.Add("User-Agent", $".NET/{Environment.Version.ToString(3)} | SetupAnt/{version.ToString(3)}");
+
+		var bytes = await httpClient.GetByteArrayAsync(release.Url, cancellationToken);
+		var file = Path.GetTempFileName();
+		await File.WriteAllBytesAsync(file, bytes, cancellationToken);
+
+		var directory = Path.Join(Path.GetTempPath(), Guid.NewGuid().ToString());
+		// TODO (.NET 10) await ZipFile.ExtractToDirectoryAsync(file, directory, cancellationToken);
+		ZipFile.ExtractToDirectory(file, directory);
+
+		var antHome = Path.Join(directory, Path.GetFileName(Directory.EnumerateDirectories(directory).Single()));
+		if (optionalTasks) await FetchOptionalTasks(antHome);
+		return antHome;
 	}
 
 	/// <summary>
 	/// Installs Apache Ant, after downloading it.
 	/// </summary>
 	/// <param name="optionalTasks">Value indicating whether to fetch the Ant optional tasks.</param>
+	/// <param name="cancellationToken">The token to cancel the operation.</param>
 	/// <returns>The path to the installation directory.</returns>
-	public string Install(bool optionalTasks = false) {
-		return "TODO";
+	public async Task<string> Install(bool optionalTasks = false, CancellationToken cancellationToken = default) {
+		var antHome = await Download(optionalTasks, cancellationToken);
+
+		var binFolder = Path.Join(antHome, "bin");
+		Environment.SetEnvironmentVariable("PATH", $"{Environment.GetEnvironmentVariable("PATH")}{Path.PathSeparator}{binFolder}");
+		await File.AppendAllTextAsync(Environment.GetEnvironmentVariable("GITHUB_PATH")!, binFolder, cancellationToken);
+
+		Environment.SetEnvironmentVariable("ANT_HOME", antHome);
+		await File.AppendAllTextAsync(Environment.GetEnvironmentVariable("GITHUB_ENV")!, $"ANT_HOME={antHome}", cancellationToken);
+		return antHome;
+	}
+
+	/// <summary>
+	/// Fetches the external libraries required by Ant optional tasks.
+	/// </summary>
+	/// <param name="antHome">The path to the Ant directory.</param>
+	/// <returns>Completes when the external libraries have been fetched.</returns>
+	/// <exception cref="ApplicationFailedException">An error occurred while fetching the external libraries.</exception>
+	private static async Task FetchOptionalTasks(string antHome) {
+		var startInfo = new ProcessStartInfo {
+			Arguments = "-jar lib/ant-launcher.jar -buildfile fetch.xml -noinput -silent -Ddest=system",
+			CreateNoWindow = true,
+			EnvironmentVariables = { ["ANT_HOME"] = antHome },
+			FileName = "java",
+			WorkingDirectory = antHome
+		};
+
+		using var process = Process.Start(startInfo) ?? throw new ApplicationFailedException(startInfo.FileName);
+		await process.WaitForExitAsync();
+		if (process.ExitCode != 0) throw new ApplicationFailedException(startInfo.FileName);
 	}
 }

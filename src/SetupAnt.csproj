@@ -4,7 +4,7 @@
 		<Copyright>© Cédric Belin</Copyright>
 		<Description>Set up your GitHub Actions workflow with a specific version of Apache Ant.</Description>
 		<Product>Setup Ant</Product>
-		<Version>5.1.0</Version>
+		<Version>6.0.0</Version>
 	</PropertyGroup>
 
 	<PropertyGroup>

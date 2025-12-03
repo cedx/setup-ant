@@ -1,6 +1,6 @@
-﻿@{
+@{
 	DefaultCommandPrefix = "Ant"
-	ModuleVersion = "5.1.0"
+	ModuleVersion = "6.0.0"
 	PowerShellVersion = "7.4"
 	RootModule = "bin/Belin.SetupAnt.dll"
 

@@ -1,11 +1,11 @@
 #!/usr/bin/env pwsh
-using module ./src/Release.psm1
-using module ./src/Setup.psm1
+using assembly ./bin/Belin.SetupAnt.dll
+using namespace Belin.SetupAnt
 
 $ErrorActionPreference = "Stop"
 $PSNativeCommandUseErrorActionPreference = $true
 Set-StrictMode -Version Latest
-if (-not (Test-Path Env:SETUP_ANT_VERSION)) { $Env:SETUP_ANT_VERSION = "latest" }
+if (-not (Test-Path Env:SETUP_ANT_VERSION)) { $Env:SETUP_ANT_VERSION = "Latest" }
 
 $release = [Release]::Find($Env:SETUP_ANT_VERSION)
 if (-not $release) { throw "No release matching the version constraint." }

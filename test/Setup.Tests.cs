@@ -7,11 +7,25 @@ namespace Belin.SetupAnt;
 [TestClass]
 public sealed class SetupTests(TestContext testContext) {
 
+	[ClassInitialize]
+  public static void ClassInitialize(TestContext testContext) {
+		if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("GITHUB_ENV"))) Environment.SetEnvironmentVariable("GITHUB_ENV", "var/GitHub-Env.txt");
+		if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("GITHUB_PATH"))) Environment.SetEnvironmentVariable("GITHUB_PATH", "var/GitHub-Path.txt");
+  }
+
 	[TestMethod]
-	public void Download() {
+	public async Task Download() {
+		var path = await new Setup(Release.Latest).Download(optionalTasks: true, testContext.CancellationToken);
+		IsTrue(File.Exists(Path.Join(path, "bin", OperatingSystem.IsWindows() ? "ant.cmd" : "ant")));
+
+		var jars = Directory.EnumerateFiles(Path.Join(path, "lib"), "*.jar");
+		HasCount(1, jars.Where(jar => Path.GetFileName(jar).StartsWith("ivy-")));
 	}
 
 	[TestMethod]
-	public void Install() {
+	public async Task Install() {
+		var path = await new Setup(Release.Latest).Install(optionalTasks: false, testContext.CancellationToken);
+		AreEqual(path, Environment.GetEnvironmentVariable("ANT_HOME"));
+		Contains(path, Environment.GetEnvironmentVariable("PATH")!);
 	}
 }

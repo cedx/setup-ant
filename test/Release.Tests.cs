@@ -50,6 +50,6 @@ public sealed class ReleaseTests {
 	[TestMethod]
 	public void Get() {
 		IsNull(Release.Get(nonExistingRelease.Version));
-		AreEqual(Release.Get("1.8.2")?.Version, Version.Parse("1.8.2"));
+		AreEqual(Version.Parse("1.8.2"), Release.Get("1.8.2")?.Version);
 	}
 }

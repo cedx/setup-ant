@@ -11,7 +11,7 @@ $release = [Release]::Find($Env:SETUP_ANT_VERSION)
 if (-not $release) { throw "No release matches the specified version constraint." }
 
 $optionalTasks = $Env:SETUP_ANT_OPTIONAL_TASKS -eq "true"
-$path = [Setup]::new($release).Install($optionalTasks)
+$path = [Setup]::new($release).Install($optionalTasks).GetAwaiter().GetResult()
 
 $installed = $optionalTasks ? "installed with optional tasks" : "installed"
 "Apache Ant $($release.Version) successfully $installed in ""$path""."

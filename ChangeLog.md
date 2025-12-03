@@ -1,5 +1,8 @@
 # Changelog
 
+## Version [6.0.0](https://github.com/cedx/setup-ant/compare/v5.1.0...v6.0.0)
+- Ported the source code to [C#](https://learn.microsoft.com/en-us/dotnet/csharp).
+
 ## Version [5.1.0](https://github.com/cedx/setup-ant/compare/v5.0.0...v5.1.0)
 - Added the `Find-Release`, `Get-Release`, `Install-Release`, `New-Release` and `Test-Release` cmdlets.
 

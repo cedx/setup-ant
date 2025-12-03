@@ -1,6 +1,6 @@
 #!/usr/bin/env pwsh
-using assembly ./bin/Belin.SetupAnt.dll
 using namespace Belin.SetupAnt
+Add-Type "$PSScriptRoot/bin/Belin.SetupAnt.dll"
 
 $ErrorActionPreference = "Stop"
 $PSNativeCommandUseErrorActionPreference = $true

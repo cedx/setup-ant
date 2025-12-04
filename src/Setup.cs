@@ -12,6 +12,11 @@ using System.Threading;
 public class Setup(Release release) {
 
 	/// <summary>
+	/// The release to download and install.
+	/// </summary>
+	public Release Release => release;
+
+	/// <summary>
 	/// Downloads and extracts the ZIP archive of Apache Ant.
 	/// </summary>
 	/// <param name="optionalTasks">Value indicating whether to fetch the Ant optional tasks.</param>
@@ -22,7 +27,7 @@ public class Setup(Release release) {
 		var version = GetType().Assembly.GetName().Version!;
 		httpClient.DefaultRequestHeaders.Add("User-Agent", $".NET/{Environment.Version.ToString(3)} | SetupAnt/{version.ToString(3)}");
 
-		var bytes = await httpClient.GetByteArrayAsync(release.Url, cancellationToken);
+		var bytes = await httpClient.GetByteArrayAsync(Release.Url, cancellationToken);
 		var file = Path.GetTempFileName();
 		await File.WriteAllBytesAsync(file, bytes, cancellationToken);
 

@@ -31,7 +31,7 @@ public partial class Release(Version version): IEquatable<Release> {
 	/// </summary>
 	public Uri Url {
 		get {
-			var baseUrl = new Uri(this == Latest ? "https://downloads.apache.org/ant/binaries/": "https://archive.apache.org/dist/ant/binaries/");
+			var baseUrl = new Uri(this == Latest ? "https://downloads.apache.org/ant/binaries/" : "https://archive.apache.org/dist/ant/binaries/");
 			return new(baseUrl, $"apache-ant-{Version}-bin.zip");
 		}
 	}

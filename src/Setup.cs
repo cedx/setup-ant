@@ -15,7 +15,7 @@ public class Setup(Release release) {
 	/// The release to download and install.
 	/// </summary>
 	public Release Release => release;
-	
+
 	/// <summary>
 	/// Downloads and extracts the ZIP archive of Apache Ant.
 	/// </summary>
@@ -46,7 +46,7 @@ public class Setup(Release release) {
 		if (optionalTasks) await FetchOptionalTasks(antHome);
 		return antHome;
 	}
-	
+
 	/// <summary>
 	/// Installs Apache Ant, after downloading it.
 	/// </summary>

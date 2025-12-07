@@ -15,6 +15,13 @@ public class Setup(Release release) {
 	/// The release to download and install.
 	/// </summary>
 	public Release Release => release;
+	
+	/// <summary>
+	/// Downloads and extracts the ZIP archive of Apache Ant.
+	/// </summary>
+	/// <param name="optionalTasks">Value indicating whether to fetch the Ant optional tasks.</param>
+	/// <returns>The path to the extracted directory.</returns>
+	public string Download(bool optionalTasks = false) => DownloadAsync(optionalTasks, CancellationToken.None).GetAwaiter().GetResult();
 
 	/// <summary>
 	/// Downloads and extracts the ZIP archive of Apache Ant.
@@ -22,7 +29,7 @@ public class Setup(Release release) {
 	/// <param name="optionalTasks">Value indicating whether to fetch the Ant optional tasks.</param>
 	/// <param name="cancellationToken">The token to cancel the operation.</param>
 	/// <returns>The path to the extracted directory.</returns>
-	public async Task<string> Download(bool optionalTasks = false, CancellationToken cancellationToken = default) {
+	public async Task<string> DownloadAsync(bool optionalTasks = false, CancellationToken cancellationToken = default) {
 		using var httpClient = new HttpClient();
 		var version = GetType().Assembly.GetName().Version!;
 		httpClient.DefaultRequestHeaders.Add("User-Agent", $".NET/{Environment.Version.ToString(3)} | SetupAnt/{version.ToString(3)}");
@@ -39,6 +46,13 @@ public class Setup(Release release) {
 		if (optionalTasks) await FetchOptionalTasks(antHome);
 		return antHome;
 	}
+	
+	/// <summary>
+	/// Installs Apache Ant, after downloading it.
+	/// </summary>
+	/// <param name="optionalTasks">Value indicating whether to fetch the Ant optional tasks.</param>
+	/// <returns>The path to the installation directory.</returns>
+	public string Install(bool optionalTasks = false) => InstallAsync(optionalTasks, CancellationToken.None).GetAwaiter().GetResult();
 
 	/// <summary>
 	/// Installs Apache Ant, after downloading it.
@@ -46,8 +60,8 @@ public class Setup(Release release) {
 	/// <param name="optionalTasks">Value indicating whether to fetch the Ant optional tasks.</param>
 	/// <param name="cancellationToken">The token to cancel the operation.</param>
 	/// <returns>The path to the installation directory.</returns>
-	public async Task<string> Install(bool optionalTasks = false, CancellationToken cancellationToken = default) {
-		var antHome = await Download(optionalTasks, cancellationToken);
+	public async Task<string> InstallAsync(bool optionalTasks = false, CancellationToken cancellationToken = default) {
+		var antHome = await DownloadAsync(optionalTasks, cancellationToken);
 
 		var binFolder = Path.Join(antHome, "bin");
 		Environment.SetEnvironmentVariable("PATH", $"{Environment.GetEnvironmentVariable("PATH")}{Path.PathSeparator}{binFolder}");

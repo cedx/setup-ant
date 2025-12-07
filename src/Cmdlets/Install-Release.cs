@@ -30,7 +30,7 @@ public class InstallReleaseCommand: PSCmdlet {
 	/// </summary>
 	protected override void ProcessRecord() {
 		var release = ParameterSetName == nameof(InputObject) ? InputObject : Release.Find(Constraint);
-		if (release?.Exists ?? false) WriteObject(new Setup(release).Install(OptionalTasks).GetAwaiter().GetResult());
+		if (release?.Exists ?? false) WriteObject(new Setup(release).Install(OptionalTasks));
 		else {
 			var exception = new InvalidOperationException("No release matches the specified version constraint.");
 			WriteError(new ErrorRecord(exception, "ReleaseNotFound", ErrorCategory.ObjectNotFound, null));

@@ -16,7 +16,7 @@ public sealed class SetupTests(TestContext testContext) {
 
 	[TestMethod]
 	public async Task Download() {
-		var path = await new Setup(Release.Latest).Download(optionalTasks: true, testContext.CancellationToken);
+		var path = await new Setup(Release.Latest).DownloadAsync(optionalTasks: true, testContext.CancellationToken);
 		IsTrue(File.Exists(Path.Join(path, "bin", OperatingSystem.IsWindows() ? "ant.cmd" : "ant")));
 
 		var jars = Directory.EnumerateFiles(Path.Join(path, "lib"), "*.jar");
@@ -25,7 +25,7 @@ public sealed class SetupTests(TestContext testContext) {
 
 	[TestMethod]
 	public async Task Install() {
-		var path = await new Setup(Release.Latest).Install(optionalTasks: false, testContext.CancellationToken);
+		var path = await new Setup(Release.Latest).InstallAsync(optionalTasks: false, testContext.CancellationToken);
 		AreEqual(path, Environment.GetEnvironmentVariable("ANT_HOME"));
 		Contains(path, Environment.GetEnvironmentVariable("PATH")!);
 	}

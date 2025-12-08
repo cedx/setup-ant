@@ -80,10 +80,8 @@ public class Setup(Release release) {
 	/// <exception cref="ApplicationFailedException">An error occurred while executing a native command.</exception>
 	private static async Task FetchOptionalTasks(string antHome) {
 		var arguments = new[] {
-			"-jar",
-			"lib/ant-launcher.jar",
-			"-buildfile",
-			"fetch.xml",
+			"-jar", "lib/ant-launcher.jar",
+			"-buildfile", "fetch.xml",
 			"-noinput",
 			"-silent",
 			"-Ddest=system"

@@ -77,7 +77,7 @@ public class Setup(Release release) {
 	/// </summary>
 	/// <param name="antHome">The path to the Ant directory.</param>
 	/// <returns>Completes when the external libraries have been fetched.</returns>
-	/// <exception cref="ApplicationFailedException">An error occurred while fetching the external libraries.</exception>
+	/// <exception cref="ApplicationFailedException">An error occurred while executing a native command.</exception>
 	private static async Task FetchOptionalTasks(string antHome) {
 		var startInfo = new ProcessStartInfo("java") {
 			Arguments = "-jar lib/ant-launcher.jar -buildfile fetch.xml -noinput -silent -Ddest=system",

@@ -79,8 +79,17 @@ public class Setup(Release release) {
 	/// <returns>Completes when the external libraries have been fetched.</returns>
 	/// <exception cref="ApplicationFailedException">An error occurred while executing a native command.</exception>
 	private static async Task FetchOptionalTasks(string antHome) {
-		var startInfo = new ProcessStartInfo("java") {
-			Arguments = "-jar lib/ant-launcher.jar -buildfile fetch.xml -noinput -silent -Ddest=system",
+		var arguments = new[] {
+			"-jar",
+			"lib/ant-launcher.jar",
+			"-buildfile",
+			"fetch.xml",
+			"-noinput",
+			"-silent",
+			"-Ddest=system"
+		};
+
+		var startInfo = new ProcessStartInfo("java", arguments) {
 			CreateNoWindow = true,
 			EnvironmentVariables = { ["ANT_HOME"] = antHome },
 			WorkingDirectory = antHome

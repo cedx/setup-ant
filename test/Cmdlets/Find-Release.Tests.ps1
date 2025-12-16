@@ -22,7 +22,7 @@ Describe "Find-Release" {
 		(Find-AntRelease "<=1.10")?.Version | Should -Be "1.10.0"
 	}
 
-	It "should throw if the version constraint is invalid" -ForEach @{ Version = "abc" }, @{ Version = "?1.10" } {
-		{ Find-AntRelease $version } | Should -Throw
+	It "should throw if the version constraint is invalid" -ForEach "abc", "?1.10" {
+		{ Find-AntRelease $_ } | Should -Throw
 	}
 }

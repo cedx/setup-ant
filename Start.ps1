@@ -5,7 +5,7 @@ $ErrorActionPreference = "Stop"
 $PSNativeCommandUseErrorActionPreference = $true
 Set-StrictMode -Version Latest
 
-Add-Type -Path "$PSScriptRoot/bin/Belin.SetupAnt.dll"
+Import-Module "$PSScriptRoot/bin/Belin.SetupAnt.dll"
 if (-not (Test-Path Env:SETUP_ANT_VERSION)) { $Env:SETUP_ANT_VERSION = "Latest" }
 
 $release = [Release]::Find($Env:SETUP_ANT_VERSION)

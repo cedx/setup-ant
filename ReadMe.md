@@ -2,7 +2,7 @@
 Set up your [GitHub Actions](https://docs.github.com/en/actions) workflow with a specific version of [Apache Ant](https://ant.apache.org).
 
 ## Documentation
-- [User guide](https://github.com/cedx/setup-ant/wiki)
+- [User guide](https://github.com/cedx/setup-ant/tree/main/docs)
 - [Examples](https://github.com/cedx/setup-ant/tree/main/example)
 
 ## Development

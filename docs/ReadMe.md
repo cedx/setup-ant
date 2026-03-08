@@ -1,4 +1,4 @@
-# Setup HashLink VM
+# Setup Ant
 Set up your [GitHub Actions](https://docs.github.com/en/actions) workflow 
 with a specific version of [Apache Ant](https://ant.apache.org).
 

@@ -39,8 +39,7 @@ public class Setup(Release release) {
 		await File.WriteAllBytesAsync(file, bytes, cancellationToken);
 
 		var directory = Path.Join(Path.GetTempPath(), Guid.NewGuid().ToString());
-		// TODO (.NET 10) await ZipFile.ExtractToDirectoryAsync(file, directory, cancellationToken);
-		ZipFile.ExtractToDirectory(file, directory);
+		await ZipFile.ExtractToDirectoryAsync(file, directory, cancellationToken);
 
 		var antHome = Path.Join(directory, Path.GetFileName(Directory.EnumerateDirectories(directory).Single()));
 		if (optionalTasks) await FetchOptionalTasks(antHome);

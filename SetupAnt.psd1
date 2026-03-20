@@ -1,7 +1,7 @@
 @{
 	DefaultCommandPrefix = "Ant"
 	ModuleVersion = "6.0.0"
-	PowerShellVersion = "7.4"
+	PowerShellVersion = "7.6"
 	RootModule = "bin/Belin.SetupAnt.dll"
 
 	Author = "Cédric Belin <cedx@outlook.com>"

@@ -1,5 +1,8 @@
 # Changelog
 
+## Version [6.1.0](https://github.com/cedx/setup-ant/compare/v6.0.0...v6.1.0)
+- Restored the [PowerShell](https://learn.microsoft.com/en-us/powershell) source code.
+
 ## Version [6.0.0](https://github.com/cedx/setup-ant/compare/v5.1.0...v6.0.0)
 - Ported the source code to [C#](https://learn.microsoft.com/en-us/dotnet/csharp).
 

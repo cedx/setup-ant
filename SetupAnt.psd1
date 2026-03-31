@@ -1,8 +1,7 @@
 @{
 	DefaultCommandPrefix = "Ant"
-	ModuleVersion = "6.0.0"
-	PowerShellVersion = "7.6"
-	RootModule = "bin/Belin.SetupAnt.dll"
+	ModuleVersion = "6.1.0"
+	PowerShellVersion = "7.4"
 
 	Author = "Cédric Belin <cedx@outlook.com>"
 	CompanyName = "Cedric-Belin.fr"
@@ -11,10 +10,10 @@
 	GUID = "30b52520-21cd-44c4-aa11-b1f0dc085686"
 
 	AliasesToExport = @()
-	FunctionsToExport = @()
+	CmdletsToExport = @()
 	VariablesToExport = @()
 
-	CmdletsToExport = @(
+	FunctionsToExport = @(
 		"Find-Release"
 		"Get-Release"
 		"Install-Release"

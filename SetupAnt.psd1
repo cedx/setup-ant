@@ -21,6 +21,14 @@
 		"Test-Release"
 	)
 
+	NestedModules = @(
+		"src/Cmdlets/Find-Release.psm1"
+		"src/Cmdlets/Get-Release.psm1"
+		"src/Cmdlets/Install-Release.psm1"
+		"src/Cmdlets/New-Release.psm1"
+		"src/Cmdlets/Test-Release.psm1"
+	)
+
 	PrivateData = @{
 		PSData = @{
 			LicenseUri = "https://github.com/cedx/setup-ant/blob/main/License.md"

@@ -1,3 +1,5 @@
+using namespace System.Linq
+
 <#
 .SYNOPSIS
 	Represents an Apache Ant release.
@@ -15,7 +17,7 @@ class Release {
 		The version number.
 	#>
 	[ValidateNotNull()]
-	[semver] $Version
+	[version] $Version
 
 	<#
 	.SYNOPSIS
@@ -24,6 +26,16 @@ class Release {
 		The version number.
 	#>
 	Release([string] $Version) {
+		$this.Version = [version] $Version
+	}
+
+	<#
+	.SYNOPSIS
+		Creates a new release.
+	.PARAMETER Version
+		The version number.
+	#>
+	Release([version] $Version) {
 		$this.Version = $Version
 	}
 
@@ -32,7 +44,35 @@ class Release {
 		Initializes the class.
 	#>
 	static Release() {
-		[Release]::Data = (Import-PowerShellDataFile "$PSScriptRoot/Release.Data.psd1").Releases | ForEach-Object { [Release] $_ }
+		[Release]::Data = (Import-PowerShellDataFile "$PSScriptRoot/Release.Data.psd1").Releases.ForEach{ [Release] $_ }
+	}
+
+	<#
+	.SYNOPSIS
+		Determines whether the two specified objects are equal.
+	.PARAMETER Object1
+		The first object.
+	.PARAMETER Object2
+		The second object.
+	.OUTPUTS
+		`$true` if `$Object1` equals `$Object2`, otherwise `$false`.
+	#>
+	static [bool] op_Equality([Release] $Object1, [Release] $Object2) {
+		return $null -eq $Object1 ? ($null -eq $Object2) : ([object]::ReferenceEquals($Object1, $Object2) -or $Object1.Equals($Object2))
+	}
+
+	<#
+	.SYNOPSIS
+		Determines whether the two specified objects are not equal.
+	.PARAMETER Object1
+		The first object.
+	.PARAMETER Object2
+		The second object.
+	.OUTPUTS
+		`$true` if `$Object1` does not equal `$Object2`, otherwise `$false`.
+	#>
+	static [bool] op_Inequality([Release] $Object1, [Release] $Object2) {
+		return -not ($Object1 -eq $Object2)
 	}
 
 	<#
@@ -42,7 +82,7 @@ class Release {
 		`$true` if this release exists, otherwise `$false`.
 	#>
 	[bool] Exists() {
-		return $null -ne [Release]::Get($this.Version)
+		return [Enumerable]::Any([Release]::Data, { $_ -eq $this })
 	}
 
 	<#
@@ -52,7 +92,8 @@ class Release {
 		The download URL.
 	#>
 	[uri] Url() {
-		return "https://archive.apache.org/dist/ant/binaries/apache-ant-$($this.Version)-bin.zip"
+		$baseUrl = $this -eq [Release]::Latest() ? "https://downloads.apache.org/ant/binaries/" : "https://archive.apache.org/dist/ant/binaries/"
+		return [uri]::new([uri] $baseUrl, "apache-ant-$($this.Version)-bin.zip")
 	}
 
 	<#
@@ -64,23 +105,23 @@ class Release {
 		The release corresponding to the specified constraint, or `$null` if not found.
 	#>
 	static [Release] Find([string] $Constraint) {
-		$operator, $semver = switch -Regex ($Constraint) {
-			"^(\*|latest)$" { "=", [Release]::Latest().Version; break }
-			"^([^\d]+)\d" { $Matches[1], [semver] ($Constraint -replace "^([^\d]+)", ""); break }
-			"^\d" { ">=", [semver] $Constraint; break }
+		$operator, [semver] $semver = switch -Regex ($Constraint) {
+			"^(\*|latest)$" { "=", [Release]::Latest().Version.ToString(); break }
+			"^([^\d]+)\d" { $Matches[1], ($Constraint -replace "^([^\d]+)", ""); break }
+			"^\d" { ">=", $Constraint; break }
 			default { throw [FormatException] "The version constraint is invalid." }
 		}
 
 		$predicate = switch ($operator) {
-			">=" { { $_.Version -ge $semver }; break }
-			">" { { $_.Version -gt $semver }; break }
-			"<=" { { $_.Version -le $semver }; break }
-			"<" { { $_.Version -lt $semver }; break }
-			"=" { { $_.Version -eq $semver }; break }
+			">" { { [semver] $_.Version -gt $semver }; break }
+			">=" { { [semver] $_.Version -ge $semver }; break }
+			"=" { { [semver] $_.Version -eq $semver }; break }
+			"<=" { { [semver] $_.Version -le $semver }; break }
+			"<" { { [semver] $_.Version -lt $semver }; break }
 			default { throw [FormatException] "The version constraint is invalid." }
 		}
 
-		return [Release]::Data.Where($predicate)[0]
+		return [Enumerable]::FirstOrDefault([Release]::Data, $predicate)
 	}
 
 	<#
@@ -92,7 +133,19 @@ class Release {
 		The release corresponding to the specified version, or `$null` if not found.
 	#>
 	static [Release] Get([string] $Version) {
-		return [Release]::Data.Where({ $_.Version -eq $Version }, "First")[0]
+		return [Release]::Get([version] $Version)
+	}
+
+	<#
+	.SYNOPSIS
+		Gets the release corresponding to the specified version.
+	.PARAMETER Version
+		The version number of a release.
+	.OUTPUTS
+		The release corresponding to the specified version, or `$null` if not found.
+	#>
+	static [Release] Get([version] $Version) {
+		return [Enumerable]::SingleOrDefault([Release]::Data, { $_.Version -eq $Version })
 	}
 
 	<#
@@ -103,5 +156,39 @@ class Release {
 	#>
 	static [Release] Latest() {
 		return [Release]::Data[0]
+	}
+
+	<#
+	.SYNOPSIS
+		Determines whether the specified object is equal to this object.
+	.PARAMETER Other
+		An object to compare with this object.
+	.OUTPUTS
+		`$true` if the specified object is equal to this object, otherwise `$false`.
+	#>
+	[bool] Equals([object] $Other) {
+		return $this.Equals($Other -as [Release])
+	}
+
+	<#
+	.SYNOPSIS
+		Determines whether the specified object is equal to this object.
+	.PARAMETER Other
+		An object to compare with this object.
+	.OUTPUTS
+		`$true` if the specified object is equal to this object, otherwise `$false`.
+	#>
+	[bool] Equals([Release] $Other) {
+		return ($null -ne $Other) -and ($this.Version -eq $Other.Version)
+	}
+
+	<#
+	.SYNOPSIS
+		Gets the hash code for this object.
+	.OUTPUTS
+		The hash code for this object.
+	#>
+	[int] GetHashCode() {
+		return [HashCode]::Combine($this.Version)
 	}
 }

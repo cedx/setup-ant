@@ -1,5 +1,6 @@
 using namespace System.Diagnostics.CodeAnalysis
 using namespace System.IO
+using namespace System.Linq
 using module ./Release.psm1
 
 <#
@@ -13,7 +14,7 @@ class Setup {
 		The release to download and install.
 	#>
 	[ValidateNotNull()]
-	hidden [Release] $Release
+	[Release] $Release
 
 	<#
 	.SYNOPSIS
@@ -48,9 +49,9 @@ class Setup {
 		Invoke-WebRequest $this.Release.Url() -OutFile $file
 
 		$directory = Join-Path ([Path]::GetTempPath()) (New-Guid)
-		Expand-Archive $file $directory -Force
+		Expand-Archive $file -DestinationPath $directory -Force
 
-		$antHome = Join-Path $directory $this.FindSubfolder($directory)
+		$antHome = Join-Path $directory ([Enumerable]::Single((Get-ChildItem $directory -Directory)).BaseName)
 		if ($OptionalTasks) { $this.FetchOptionalTasks($antHome) }
 		return $antHome
 	}
@@ -81,7 +82,7 @@ class Setup {
 		Add-Content $Env:GITHUB_PATH $binFolder
 
 		$Env:ANT_HOME = $antHome
-		Add-Content $Env:GITHUB_ENV "ANT_HOME=$Env:ANT_HOME"
+		Add-Content $Env:GITHUB_ENV "ANT_HOME=$antHome"
 		return $antHome
 	}
 
@@ -94,23 +95,5 @@ class Setup {
 	hidden [void] FetchOptionalTasks([string] $AntHome) {
 		$options = "-jar lib/ant-launcher.jar -buildfile fetch.xml -noinput -silent -Ddest=system"
 		Start-Process java $options -Environment @{ ANT_HOME = $AntHome } -NoNewWindow -Wait -WorkingDirectory $AntHome
-	}
-
-	<#
-	.SYNOPSIS
-		Determines the name of the single subfolder in the specified directory.
-	.PARAMETER Directory
-		The directory path.
-	.OUTPUTS
-		The name of the single subfolder in the specified directory.
-	#>
-	[SuppressMessage("PSUseDeclaredVarsMoreThanAssignments", "")]
-	hidden [string] FindSubfolder([string] $Directory) {
-		$folders = Get-ChildItem $Directory -Directory
-		return $discard = switch ($folders.Count) {
-			0 { throw "No subfolder found in: $Directory." }
-			1 { $folders[0].BaseName; break }
-			default { throw "Multiple subfolders found in: $Directory." }
-		}
 	}
 }

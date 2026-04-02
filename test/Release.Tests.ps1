@@ -52,7 +52,7 @@ Describe "Release" {
 		}
 
 		It "should throw if the version constraint is invalid" -TestCases @(
-			@{ Version = "abc" },
+			@{ Version = "abc" }
 			@{ Version = "?1.10" }
 		) {
 			{ [Release]::Find($version) } | Should -Throw

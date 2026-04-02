@@ -1,3 +1,5 @@
+using module ../Release.psm1
+
 # /// <summary>
 # /// Finds a release that matches the specified version constraint.
 # /// </summary>

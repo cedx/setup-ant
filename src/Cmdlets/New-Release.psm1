@@ -1,3 +1,5 @@
+using module ../Release.psm1
+
 # /// <summary>
 # /// Creates a new release.
 # /// </summary>

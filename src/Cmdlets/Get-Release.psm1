@@ -1,3 +1,5 @@
+using module ../Release.psm1
+
 # /// <summary>
 # /// Gets the release corresponding to the specified version.
 # /// </summary>

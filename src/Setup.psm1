@@ -1,4 +1,3 @@
-using namespace System.Diagnostics.CodeAnalysis
 using namespace System.IO
 using namespace System.Linq
 using module ./Release.psm1

@@ -79,12 +79,12 @@ class Setup {
 	[string] Install([bool] $OptionalTasks) {
 		$antHome = $this.Download($OptionalTasks)
 
-		$binFolder = Join-Path $antHome "bin"
+		$binFolder = Join-Path $antHome bin
 		$Env:PATH += "$([Path]::PathSeparator)$binFolder"
 		Add-Content $Env:GITHUB_PATH $binFolder
 
 		$Env:ANT_HOME = $antHome
-		Add-Content $Env:GITHUB_ENV "ANT_HOME=$antHome"
+		Add-Content $Env:GITHUB_ENV "ANT_HOME=$Env:ANT_HOME"
 		return $antHome
 	}
 

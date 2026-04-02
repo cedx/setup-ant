@@ -29,7 +29,7 @@ function Install-Release {
 
 	process {
 		$release = $PSCmdlet.ParameterSetName -eq "InputObject" ? $InputObject : [Release]::Find($Constraint)
-		if ($release -and $release.Exists()) { [Setup]::new($release).Install($OptionalTasks) }
+		if (${release}?.Exists()) { [Setup]::new($release).Install($OptionalTasks) }
 		else { throw [InvalidOperationException] "No release matches the specified version constraint." }
 	}
 }

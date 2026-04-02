@@ -144,8 +144,8 @@ class Release {
 		The release corresponding to the specified version, or `$null` if not found.
 	#>
 	static [Release] Get([version] $Version) {
-		$releases = [Release]::Data.Where({ $_.Version -eq $Version }, "Default", 2)
-		return $releases.Count -eq 1 ? $releases[0] : $null
+		$releases = [Release]::Data.Where({ $_.Version -eq $Version }, "First")
+		return $releases.Count ? $releases[0] : $null
 	}
 
 	<#

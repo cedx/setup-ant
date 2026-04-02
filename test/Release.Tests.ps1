@@ -8,7 +8,7 @@ using module ../src/Release.psm1
 Describe "Release" {
 	BeforeAll {
 		[SuppressMessage("PSUseDeclaredVarsMoreThanAssignments", "")]
-		$existingRelease = [Release] "1.10.15"
+		$existingRelease = [Release] "1.10.16"
 
 		[SuppressMessage("PSUseDeclaredVarsMoreThanAssignments", "")]
 		$latestRelease = [Release]::Latest()
@@ -29,7 +29,7 @@ Describe "Release" {
 
 	Context "Url" {
 		It "should return the URL of the Ant archive" {
-			$existingRelease.Url() | Should -BeExactly "https://downloads.apache.org/ant/binaries/apache-ant-1.10.15-bin.zip"
+			$existingRelease.Url() | Should -BeExactly "https://downloads.apache.org/ant/binaries/apache-ant-1.10.16-bin.zip"
 			$nonExistingRelease.Url() | Should -BeExactly "https://archive.apache.org/dist/ant/binaries/apache-ant-666.6.6-bin.zip"
 		}
 	}
@@ -38,7 +38,7 @@ Describe "Release" {
 		It "should return `$null if no release matches the version constraint" {
 			[Release]::Find($nonExistingRelease.Version.ToString()) | Should -Be $null
 			[Release]::Find("2") | Should -Be $null
-			[Release]::Find(">1.10.15") | Should -Be $null
+			[Release]::Find(">1.10.16") | Should -Be $null
 		}
 
 		It "should return the release corresponding to the version constraint if it exists" {
@@ -46,9 +46,9 @@ Describe "Release" {
 			[Release]::Find("*") | Should -Be $latestRelease
 			[Release]::Find("1") | Should -Be $latestRelease
 
-			[Release]::Find("=1.8.2") | Should -Be [Release] "1.8.2"
-			[Release]::Find("<1.10") | Should -Be [Release] "1.9.16"
-			[Release]::Find("<=1.10") | Should -Be [Release] "1.10.0"
+			[Release]::Find("=1.8.2") | Should -Be ([Release] "1.8.2")
+			[Release]::Find("<1.10") | Should -Be ([Release] "1.9.16")
+			[Release]::Find("<=1.10") | Should -Be ([Release] "1.10.0")
 		}
 
 		It "should throw if the version constraint is invalid" -TestCases @(
@@ -65,7 +65,7 @@ Describe "Release" {
 		}
 
 		It "should return the release corresponding to the version number if it exists" {
-			[Release]::Get("1.8.2")?.Version | Should -Be [version] "1.8.2"
+			[Release]::Get("1.8.2")?.Version | Should -Be ([version] "1.8.2")
 		}
 	}
 }

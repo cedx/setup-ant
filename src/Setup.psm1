@@ -1,5 +1,4 @@
 using namespace System.IO
-using namespace System.Linq
 using module ./Release.psm1
 
 <#
@@ -45,12 +44,16 @@ class Setup {
 	#>
 	[string] Download([bool] $OptionalTasks) {
 		$file = New-TemporaryFile
-		Invoke-WebRequest $this.Release.Url() -OutFile $file
+		$version = (Import-PowerShellDataFile "$PSScriptRoot/../SetupAnt.psd1").ModuleVersion
+		Invoke-WebRequest $this.Release.Url() -OutFile $file -UserAgent ".NET/$([Environment]::Version.ToString(3)) | Belin.SetupAnt/$version"
 
 		$directory = Join-Path ([Path]::GetTempPath()) (New-Guid)
 		Expand-Archive $file -DestinationPath $directory -Force
 
-		$antHome = Join-Path $directory ([Enumerable]::Single((Get-ChildItem $directory -Directory)).BaseName)
+		$folders = Get-ChildItem $directory -Directory
+		if ($folders.Count -ne 1) { throw [InvalidOperationException] "No subfolders or multiple subfolders found in: $directory" }
+
+		$antHome = Join-Path $directory $folders[0].BaseName
 		if ($OptionalTasks) { $this.FetchOptionalTasks($antHome) }
 		return $antHome
 	}

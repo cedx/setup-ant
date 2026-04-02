@@ -1,5 +1,3 @@
-using namespace System.Linq
-
 <#
 .SYNOPSIS
 	Represents an Apache Ant release.
@@ -82,7 +80,7 @@ class Release {
 		`$true` if this release exists, otherwise `$false`.
 	#>
 	[bool] Exists() {
-		return [Enumerable]::Any([Release]::Data, { $_ -eq $this })
+		return [Release]::Data.Where({ $_ -eq $this }, "First").Count -gt 0
 	}
 
 	<#
@@ -121,7 +119,8 @@ class Release {
 			default { throw [FormatException] "The version constraint is invalid." }
 		}
 
-		return [Enumerable]::FirstOrDefault([Release]::Data, $predicate)
+		$releases = [Release]::Data.Where($predicate, "First")
+		return $releases.Count ? $releases[0] : $null
 	}
 
 	<#
@@ -145,7 +144,8 @@ class Release {
 		The release corresponding to the specified version, or `$null` if not found.
 	#>
 	static [Release] Get([version] $Version) {
-		return [Enumerable]::SingleOrDefault([Release]::Data, { $_.Version -eq $Version })
+		$releases = [Release]::Data.Where({ $_.Version -eq $Version }, "Default", 2)
+		return $releases.Count -eq 1 ? $releases[0] : $null
 	}
 
 	<#
@@ -167,19 +167,7 @@ class Release {
 		`$true` if the specified object is equal to this object, otherwise `$false`.
 	#>
 	[bool] Equals([object] $Other) {
-		return $this.Equals($Other -as [Release])
-	}
-
-	<#
-	.SYNOPSIS
-		Determines whether the specified object is equal to this object.
-	.PARAMETER Other
-		An object to compare with this object.
-	.OUTPUTS
-		`$true` if the specified object is equal to this object, otherwise `$false`.
-	#>
-	[bool] Equals([Release] $Other) {
-		return ($null -ne $Other) -and ($this.Version -eq $Other.Version)
+		return ($Other -is [Release]) -and ($this.Version -eq $Other.Version)
 	}
 
 	<#

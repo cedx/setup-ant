@@ -1,11 +1,12 @@
 #!/usr/bin/env pwsh
-using namespace Belin.SetupAnt
+using module ./src/Release.psm1
+using module ./src/Setup.psm1
 
 $ErrorActionPreference = "Stop"
 $PSNativeCommandUseErrorActionPreference = $true
 Set-StrictMode -Version Latest
 
-Import-Module "$PSScriptRoot/bin/Belin.SetupAnt.dll"
+# TODO Import-Module "$PSScriptRoot/SetupAnt.psd1"
 if (-not (Test-Path Env:SETUP_ANT_VERSION)) { $Env:SETUP_ANT_VERSION = "Latest" }
 
 $release = [Release]::Find($Env:SETUP_ANT_VERSION)

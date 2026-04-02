@@ -7,6 +7,8 @@ Import-Module "$PSScriptRoot/SetupAnt.psd1"
 if (-not (Test-Path Env:SETUP_ANT_VERSION)) { $Env:SETUP_ANT_VERSION = "Latest" }
 
 $release = Find-AntRelease $Env:SETUP_ANT_VERSION
+if (-not $release) { throw "No release matches the specified version constraint." }
+
 $optionalTasks = $Env:SETUP_ANT_OPTIONAL_TASKS -eq "true"
 $path = Install-AntRelease -InputObject $release -OptionalTasks:$optionalTasks
 

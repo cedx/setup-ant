@@ -44,8 +44,7 @@ class Setup {
 	#>
 	[string] Download([bool] $OptionalTasks) {
 		$file = New-TemporaryFile
-		$version = (Import-PowerShellDataFile "$PSScriptRoot/../SetupAnt.psd1").ModuleVersion
-		Invoke-WebRequest $this.Release.Url() -OutFile $file -UserAgent ".NET/$([Environment]::Version.ToString(3)) | Belin.SetupAnt/$version"
+		Invoke-WebRequest $this.Release.Url() -OutFile $file
 
 		$directory = Join-Path ([Path]::GetTempPath()) (New-Guid)
 		Expand-Archive $file -DestinationPath $directory -Force

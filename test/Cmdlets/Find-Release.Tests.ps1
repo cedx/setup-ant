@@ -23,6 +23,6 @@ Describe "Find-Release" {
 	}
 
 	It "should throw if the version constraint is invalid" -ForEach "abc", "?1.10" {
-		{ Find-AntRelease $_ } | Should -Throw
+		{ Find-AntRelease $_ -ErrorAction Stop } | Should -Throw
 	}
 }

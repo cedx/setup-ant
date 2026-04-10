@@ -94,7 +94,7 @@ class Setup {
 		The path to the Ant directory.
 	#>
 	hidden [void] FetchOptionalTasks([string] $AntHome) {
-		$options = "-jar lib/ant-launcher.jar -buildfile fetch.xml -noinput -silent -Ddest=system"
-		Start-Process java $options -Environment @{ ANT_HOME = $AntHome } -NoNewWindow -Wait -WorkingDirectory $AntHome
+		$argumentList = "-jar", "lib/ant-launcher.jar", "-buildfile", "fetch.xml", "-noinput", "-silent", "-Ddest=system"
+		Start-Process java -ArgumentList $argumentList -Environment @{ ANT_HOME = $AntHome } -NoNewWindow -Wait -WorkingDirectory $AntHome
 	}
 }

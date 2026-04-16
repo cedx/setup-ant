@@ -47,12 +47,40 @@ class Release {
 
 	<#
 	.SYNOPSIS
+		Determines whether the two specified objects are equal.
+	.PARAMETER Object1
+		The first object.
+	.PARAMETER Object2
+		The second object.
+	.OUTPUTS
+		`$true` if `$Object1` equals `$Object2`, otherwise `$false`.
+	#>
+	static [bool] op_Equality([Release] $Object1, [Release] $Object2) {
+		return [object]::ReferenceEquals($Object1, $Object2) -or ${Object1}?.Equals($Object2)
+	}
+
+	<#
+	.SYNOPSIS
+		Determines whether the two specified objects are not equal.
+	.PARAMETER Object1
+		The first object.
+	.PARAMETER Object2
+		The second object.
+	.OUTPUTS
+		`$true` if `$Object1` does not equal `$Object2`, otherwise `$false`.
+	#>
+	static [bool] op_Inequality([Release] $Object1, [Release] $Object2) {
+		return -not ($Object1 -eq $Object2)
+	}
+
+	<#
+	.SYNOPSIS
 		Gets a value indicating whether this release exists.
 	.OUTPUTS
 		`$true` if this release exists, otherwise `$false`.
 	#>
 	[bool] Exists() {
-		return [Release]::Data.Where({ $_.Equals($this) }, "First").Count
+		return [Release]::Data.Where({ $_ -eq $this }, "First").Count
 	}
 
 	<#
@@ -62,7 +90,7 @@ class Release {
 		The download URL.
 	#>
 	[uri] Url() {
-		$baseUrl = $this.Equals([Release]::Latest()) ? "https://downloads.apache.org/ant/binaries/" : "https://archive.apache.org/dist/ant/binaries/"
+		$baseUrl = $this -eq [Release]::Latest() ? "https://downloads.apache.org/ant/binaries/" : "https://archive.apache.org/dist/ant/binaries/"
 		return [uri]::new([uri] $baseUrl, "apache-ant-$($this.Version)-bin.zip")
 	}
 

@@ -1,5 +1,8 @@
 # Changelog
 
+## Version [6.2.0](https://github.com/cedx/setup-ant/compare/v6.1.0...v6.2.0)
+- Added [Ant](https://ant.apache.org) 1.10.17 to the supported releases.
+
 ## Version [6.1.0](https://github.com/cedx/setup-ant/compare/v6.0.0...v6.1.0)
 - Added [Ant](https://ant.apache.org) 1.10.16 to the supported releases.
 - Restored the [PowerShell](https://learn.microsoft.com/en-us/powershell) source code.

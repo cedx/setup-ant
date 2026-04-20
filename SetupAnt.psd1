@@ -1,6 +1,6 @@
 @{
 	DefaultCommandPrefix = "Ant"
-	ModuleVersion = "6.1.0"
+	ModuleVersion = "6.2.0"
 	PowerShellVersion = "7.4"
 
 	Author = "Cédric Belin <cedx@outlook.com>"

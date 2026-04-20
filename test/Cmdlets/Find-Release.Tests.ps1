@@ -16,7 +16,7 @@ Describe "Find-Release" {
 		Find-AntRelease "*" | Should -Be $latestRelease
 		Find-AntRelease "1" | Should -Be $latestRelease
 		Find-AntRelease "2" | Should -Be $null
-		(Find-AntRelease ">1.10.16")?.Version | Should -Be $null
+		(Find-AntRelease ">1.10.17")?.Version | Should -Be $null
 		(Find-AntRelease "=1.8.2")?.Version | Should -Be "1.8.2"
 		(Find-AntRelease "<1.10")?.Version | Should -Be "1.9.16"
 		(Find-AntRelease "<=1.10")?.Version | Should -Be "1.10.0"

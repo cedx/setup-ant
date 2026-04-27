@@ -2,7 +2,7 @@
 .SYNOPSIS
 	The list of all releases.
 #>
-[Release[]] $Data = (Import-PowerShellDataFile "$PSScriptRoot/ReleaseData.psd1").Releases.ForEach{ [Release] $_ }
+$Data = (Import-PowerShellDataFile "$PSScriptRoot/ReleaseData.psd1").Releases.ForEach{ [Release] $_ }
 
 <#
 .SYNOPSIS

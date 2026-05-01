@@ -1,14 +1,14 @@
 <#
 .SYNOPSIS
-	The list of all releases.
-#>
-$Data = (Import-PowerShellDataFile "$PSScriptRoot/ReleaseData.psd1").Releases.ForEach{ [Release] $_ }
-
-<#
-.SYNOPSIS
 	Represents an Apache Ant release.
 #>
 class Release {
+
+	<#
+	.SYNOPSIS
+		The list of all releases.
+	#>
+	hidden static [Release[]] $Data
 
 	<#
 	.SYNOPSIS
@@ -35,6 +35,14 @@ class Release {
 	#>
 	Release([version] $Version) {
 		$this.Version = $Version
+	}
+
+	<#
+	.SYNOPSIS
+		Initializes the class.
+	#>
+	static Release() {
+		[Release]::Data = (Import-PowerShellDataFile "$PSScriptRoot/ReleaseData.psd1").Releases.ForEach{ [Release] $_ }
 	}
 
 	<#
@@ -72,7 +80,7 @@ class Release {
 		`$true` if this release exists, otherwise `$false`.
 	#>
 	[bool] Exists() {
-		return $Script:Data.Where({ $_ -eq $this }, "First").Count
+		return [Release]::Data.Where({ $_ -eq $this }, "First").Count
 	}
 
 	<#
@@ -111,7 +119,7 @@ class Release {
 			default { throw [FormatException] "The version constraint is invalid." }
 		}
 
-		$releases = $Script:Data.Where($predicate, "First")
+		$releases = [Release]::Data.Where($predicate, "First")
 		return $releases ? $releases[0] : $null
 	}
 
@@ -124,7 +132,7 @@ class Release {
 		The release corresponding to the specified version, or `$null` if not found.
 	#>
 	static [Release] Get([version] $Version) {
-		$releases = $Script:Data.Where({ $_.Version -eq $Version }, "First")
+		$releases = [Release]::Data.Where({ $_.Version -eq $Version }, "First")
 		return $releases ? $releases[0] : $null
 	}
 
@@ -135,7 +143,7 @@ class Release {
 		The latest release.
 	#>
 	static [Release] Latest() {
-		return $Script:Data[0]
+		return [Release]::Data[0]
 	}
 
 	<#
